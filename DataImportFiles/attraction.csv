@@ -1,0 +1,501 @@
+attraction_id,attraction_name,city,category,description
+1,Attraction 1,Ashdod,Kids,Open all year round.
+2,Attraction 2,Ashdod,Science,Suitable for children and families.
+3,Attraction 3,Ramat Gan,Science,Suitable for children and families.
+4,Attraction 4,Nazareth,History,Suitable for children and families.
+5,Attraction 5,Eilat,Amusement Park,Suitable for children and families.
+6,Attraction 6,Beer Sheva,Museum,Includes food stands and rest areas.
+7,Attraction 7,Ashdod,Science,Includes food stands and rest areas.
+8,Attraction 8,Nazareth,Zoo,Offers guided tours and events.
+9,Attraction 9,Eilat,Amusement Park,Suitable for children and families.
+10,Attraction 10,Netanya,Water Park,Offers guided tours and events.
+11,Attraction 11,Netanya,Water Park,Includes food stands and rest areas.
+12,Attraction 12,Eilat,Museum,Open all year round.
+13,Attraction 13,Ashdod,Family,Includes food stands and rest areas.
+14,Attraction 14,Tel Aviv,Water Park,Suitable for children and families.
+15,Attraction 15,Holon,Kids,Suitable for children and families.
+16,Attraction 16,Beer Sheva,Adventure,Open all year round.
+17,Attraction 17,Ramat Gan,Museum,Suitable for children and families.
+18,Attraction 18,Eilat,Water Park,Offers guided tours and events.
+19,Attraction 19,Eilat,Family,Suitable for children and families.
+20,Attraction 20,Ashdod,Adventure,Includes food stands and rest areas.
+21,Attraction 21,Netanya,Amusement Park,Offers guided tours and events.
+22,Attraction 22,Beer Sheva,Kids,Open all year round.
+23,Attraction 23,Ramat Gan,Amusement Park,Open all year round.
+24,Attraction 24,Nazareth,History,Offers guided tours and events.
+25,Attraction 25,Jerusalem,History,Open all year round.
+26,Attraction 26,Eilat,Nature,Open all year round.
+27,Attraction 27,Ashdod,Museum,Includes food stands and rest areas.
+28,Attraction 28,Eilat,Zoo,Popular attraction with many activities.
+29,Attraction 29,Ramat Gan,Kids,Includes food stands and rest areas.
+30,Attraction 30,Holon,Science,Open all year round.
+31,Attraction 31,Haifa,Adventure,Open all year round.
+32,Attraction 32,Eilat,Science,Includes food stands and rest areas.
+33,Attraction 33,Eilat,History,Includes food stands and rest areas.
+34,Attraction 34,Netanya,Amusement Park,Offers guided tours and events.
+35,Attraction 35,Beer Sheva,History,Suitable for children and families.
+36,Attraction 36,Netanya,Zoo,Suitable for children and families.
+37,Attraction 37,Nazareth,History,Suitable for children and families.
+38,Attraction 38,Nazareth,Museum,Includes food stands and rest areas.
+39,Attraction 39,Tel Aviv,Water Park,Popular attraction with many activities.
+40,Attraction 40,Tel Aviv,Science,Suitable for children and families.
+41,Attraction 41,Eilat,Water Park,Suitable for children and families.
+42,Attraction 42,Tel Aviv,Adventure,Includes food stands and rest areas.
+43,Attraction 43,Beer Sheva,Nature,Popular attraction with many activities.
+44,Attraction 44,Holon,Family,Offers guided tours and events.
+45,Attraction 45,Beer Sheva,Museum,Popular attraction with many activities.
+46,Attraction 46,Nazareth,Kids,Offers guided tours and events.
+47,Attraction 47,Tel Aviv,Museum,Includes food stands and rest areas.
+48,Attraction 48,Ramat Gan,Kids,Open all year round.
+49,Attraction 49,Tel Aviv,Kids,Offers guided tours and events.
+50,Attraction 50,Haifa,Water Park,Popular attraction with many activities.
+51,Attraction 51,Nazareth,Zoo,Suitable for children and families.
+52,Attraction 52,Eilat,Family,Includes food stands and rest areas.
+53,Attraction 53,Ramat Gan,Nature,Open all year round.
+54,Attraction 54,Ashdod,Water Park,Open all year round.
+55,Attraction 55,Ashdod,History,Includes food stands and rest areas.
+56,Attraction 56,Eilat,Adventure,Open all year round.
+57,Attraction 57,Jerusalem,Museum,Popular attraction with many activities.
+58,Attraction 58,Ashdod,Science,Offers guided tours and events.
+59,Attraction 59,Nazareth,History,Popular attraction with many activities.
+60,Attraction 60,Tel Aviv,Zoo,Popular attraction with many activities.
+61,Attraction 61,Beer Sheva,Science,Open all year round.
+62,Attraction 62,Holon,Water Park,Includes food stands and rest areas.
+63,Attraction 63,Tel Aviv,Adventure,Suitable for children and families.
+64,Attraction 64,Holon,History,Open all year round.
+65,Attraction 65,Tel Aviv,Water Park,Open all year round.
+66,Attraction 66,Nazareth,Family,Popular attraction with many activities.
+67,Attraction 67,Haifa,Nature,Popular attraction with many activities.
+68,Attraction 68,Eilat,Family,Suitable for children and families.
+69,Attraction 69,Ashdod,Water Park,Open all year round.
+70,Attraction 70,Haifa,Family,Suitable for children and families.
+71,Attraction 71,Holon,Science,Includes food stands and rest areas.
+72,Attraction 72,Netanya,Science,Suitable for children and families.
+73,Attraction 73,Jerusalem,Kids,Open all year round.
+74,Attraction 74,Tel Aviv,Water Park,Offers guided tours and events.
+75,Attraction 75,Eilat,Water Park,Open all year round.
+76,Attraction 76,Holon,Family,Includes food stands and rest areas.
+77,Attraction 77,Ashdod,Nature,Popular attraction with many activities.
+78,Attraction 78,Ramat Gan,History,Offers guided tours and events.
+79,Attraction 79,Eilat,Nature,Includes food stands and rest areas.
+80,Attraction 80,Ashdod,Science,Suitable for children and families.
+81,Attraction 81,Holon,Science,Popular attraction with many activities.
+82,Attraction 82,Holon,Amusement Park,Suitable for children and families.
+83,Attraction 83,Jerusalem,Water Park,Open all year round.
+84,Attraction 84,Haifa,Science,Suitable for children and families.
+85,Attraction 85,Ashdod,Nature,Open all year round.
+86,Attraction 86,Jerusalem,Water Park,Popular attraction with many activities.
+87,Attraction 87,Ramat Gan,History,Open all year round.
+88,Attraction 88,Ramat Gan,Water Park,Suitable for children and families.
+89,Attraction 89,Jerusalem,Zoo,Offers guided tours and events.
+90,Attraction 90,Beer Sheva,Kids,Includes food stands and rest areas.
+91,Attraction 91,Nazareth,Science,Popular attraction with many activities.
+92,Attraction 92,Tel Aviv,Water Park,Open all year round.
+93,Attraction 93,Nazareth,Water Park,Includes food stands and rest areas.
+94,Attraction 94,Holon,Nature,Offers guided tours and events.
+95,Attraction 95,Tel Aviv,Amusement Park,Offers guided tours and events.
+96,Attraction 96,Ashdod,Water Park,Includes food stands and rest areas.
+97,Attraction 97,Eilat,Family,Includes food stands and rest areas.
+98,Attraction 98,Haifa,Science,Suitable for children and families.
+99,Attraction 99,Haifa,Amusement Park,Open all year round.
+100,Attraction 100,Ramat Gan,History,Suitable for children and families.
+101,Attraction 101,Jerusalem,Zoo,Offers guided tours and events.
+102,Attraction 102,Ramat Gan,Science,Open all year round.
+103,Attraction 103,Beer Sheva,Water Park,Open all year round.
+104,Attraction 104,Ramat Gan,Adventure,Offers guided tours and events.
+105,Attraction 105,Holon,Family,Suitable for children and families.
+106,Attraction 106,Beer Sheva,Water Park,Suitable for children and families.
+107,Attraction 107,Ramat Gan,Museum,Offers guided tours and events.
+108,Attraction 108,Netanya,Family,Offers guided tours and events.
+109,Attraction 109,Netanya,History,Open all year round.
+110,Attraction 110,Ashdod,Family,Suitable for children and families.
+111,Attraction 111,Ramat Gan,Nature,Includes food stands and rest areas.
+112,Attraction 112,Eilat,History,Open all year round.
+113,Attraction 113,Haifa,Science,Open all year round.
+114,Attraction 114,Ramat Gan,History,Includes food stands and rest areas.
+115,Attraction 115,Eilat,Nature,Offers guided tours and events.
+116,Attraction 116,Ramat Gan,Science,Open all year round.
+117,Attraction 117,Jerusalem,Family,Suitable for children and families.
+118,Attraction 118,Holon,Kids,Suitable for children and families.
+119,Attraction 119,Nazareth,Museum,Offers guided tours and events.
+120,Attraction 120,Eilat,History,Open all year round.
+121,Attraction 121,Jerusalem,Science,Offers guided tours and events.
+122,Attraction 122,Haifa,Amusement Park,Suitable for children and families.
+123,Attraction 123,Ramat Gan,Zoo,Offers guided tours and events.
+124,Attraction 124,Ashdod,Water Park,Offers guided tours and events.
+125,Attraction 125,Holon,History,Includes food stands and rest areas.
+126,Attraction 126,Ashdod,Kids,Includes food stands and rest areas.
+127,Attraction 127,Ashdod,Kids,Popular attraction with many activities.
+128,Attraction 128,Netanya,Kids,Includes food stands and rest areas.
+129,Attraction 129,Jerusalem,Water Park,Suitable for children and families.
+130,Attraction 130,Netanya,Zoo,Includes food stands and rest areas.
+131,Attraction 131,Tel Aviv,Family,Offers guided tours and events.
+132,Attraction 132,Netanya,Science,Popular attraction with many activities.
+133,Attraction 133,Tel Aviv,Water Park,Open all year round.
+134,Attraction 134,Eilat,Kids,Includes food stands and rest areas.
+135,Attraction 135,Nazareth,Family,Includes food stands and rest areas.
+136,Attraction 136,Eilat,History,Open all year round.
+137,Attraction 137,Ashdod,History,Includes food stands and rest areas.
+138,Attraction 138,Nazareth,Zoo,Open all year round.
+139,Attraction 139,Tel Aviv,History,Popular attraction with many activities.
+140,Attraction 140,Ramat Gan,Science,Popular attraction with many activities.
+141,Attraction 141,Jerusalem,Zoo,Open all year round.
+142,Attraction 142,Ramat Gan,Nature,Offers guided tours and events.
+143,Attraction 143,Eilat,Kids,Offers guided tours and events.
+144,Attraction 144,Netanya,History,Popular attraction with many activities.
+145,Attraction 145,Beer Sheva,History,Open all year round.
+146,Attraction 146,Jerusalem,Amusement Park,Popular attraction with many activities.
+147,Attraction 147,Jerusalem,Museum,Open all year round.
+148,Attraction 148,Jerusalem,Zoo,Suitable for children and families.
+149,Attraction 149,Nazareth,Zoo,Includes food stands and rest areas.
+150,Attraction 150,Haifa,Nature,Includes food stands and rest areas.
+151,Attraction 151,Ashdod,History,Suitable for children and families.
+152,Attraction 152,Ashdod,Zoo,Suitable for children and families.
+153,Attraction 153,Ashdod,Science,Popular attraction with many activities.
+154,Attraction 154,Holon,Adventure,Offers guided tours and events.
+155,Attraction 155,Holon,Science,Offers guided tours and events.
+156,Attraction 156,Tel Aviv,Adventure,Suitable for children and families.
+157,Attraction 157,Ramat Gan,Water Park,Includes food stands and rest areas.
+158,Attraction 158,Jerusalem,Kids,Suitable for children and families.
+159,Attraction 159,Netanya,Nature,Suitable for children and families.
+160,Attraction 160,Beer Sheva,Water Park,Open all year round.
+161,Attraction 161,Beer Sheva,Kids,Open all year round.
+162,Attraction 162,Holon,Science,Includes food stands and rest areas.
+163,Attraction 163,Ashdod,Family,Popular attraction with many activities.
+164,Attraction 164,Netanya,Nature,Offers guided tours and events.
+165,Attraction 165,Holon,Zoo,Open all year round.
+166,Attraction 166,Holon,Family,Popular attraction with many activities.
+167,Attraction 167,Haifa,Nature,Popular attraction with many activities.
+168,Attraction 168,Eilat,Amusement Park,Popular attraction with many activities.
+169,Attraction 169,Haifa,Nature,Suitable for children and families.
+170,Attraction 170,Nazareth,Science,Offers guided tours and events.
+171,Attraction 171,Holon,Zoo,Includes food stands and rest areas.
+172,Attraction 172,Ashdod,Science,Suitable for children and families.
+173,Attraction 173,Beer Sheva,Kids,Suitable for children and families.
+174,Attraction 174,Nazareth,Zoo,Offers guided tours and events.
+175,Attraction 175,Ramat Gan,Zoo,Suitable for children and families.
+176,Attraction 176,Netanya,History,Includes food stands and rest areas.
+177,Attraction 177,Tel Aviv,Nature,Popular attraction with many activities.
+178,Attraction 178,Beer Sheva,Zoo,Suitable for children and families.
+179,Attraction 179,Ashdod,Kids,Includes food stands and rest areas.
+180,Attraction 180,Beer Sheva,Science,Offers guided tours and events.
+181,Attraction 181,Ashdod,History,Offers guided tours and events.
+182,Attraction 182,Haifa,Water Park,Includes food stands and rest areas.
+183,Attraction 183,Tel Aviv,Adventure,Open all year round.
+184,Attraction 184,Tel Aviv,Amusement Park,Suitable for children and families.
+185,Attraction 185,Nazareth,Amusement Park,Suitable for children and families.
+186,Attraction 186,Beer Sheva,Family,Offers guided tours and events.
+187,Attraction 187,Nazareth,Kids,Popular attraction with many activities.
+188,Attraction 188,Holon,Water Park,Open all year round.
+189,Attraction 189,Nazareth,Nature,Includes food stands and rest areas.
+190,Attraction 190,Tel Aviv,History,Includes food stands and rest areas.
+191,Attraction 191,Eilat,Science,Popular attraction with many activities.
+192,Attraction 192,Eilat,Amusement Park,Popular attraction with many activities.
+193,Attraction 193,Beer Sheva,Amusement Park,Open all year round.
+194,Attraction 194,Jerusalem,History,Popular attraction with many activities.
+195,Attraction 195,Eilat,Adventure,Includes food stands and rest areas.
+196,Attraction 196,Netanya,Family,Offers guided tours and events.
+197,Attraction 197,Haifa,Family,Suitable for children and families.
+198,Attraction 198,Eilat,Adventure,Popular attraction with many activities.
+199,Attraction 199,Holon,Nature,Includes food stands and rest areas.
+200,Attraction 200,Ramat Gan,Family,Includes food stands and rest areas.
+201,Attraction 201,Haifa,Nature,Open all year round.
+202,Attraction 202,Ramat Gan,Family,Open all year round.
+203,Attraction 203,Nazareth,Water Park,Suitable for children and families.
+204,Attraction 204,Ashdod,Museum,Open all year round.
+205,Attraction 205,Haifa,Zoo,Suitable for children and families.
+206,Attraction 206,Haifa,Nature,Suitable for children and families.
+207,Attraction 207,Ashdod,History,Suitable for children and families.
+208,Attraction 208,Holon,Amusement Park,Offers guided tours and events.
+209,Attraction 209,Ashdod,History,Popular attraction with many activities.
+210,Attraction 210,Jerusalem,Science,Includes food stands and rest areas.
+211,Attraction 211,Ramat Gan,Nature,Offers guided tours and events.
+212,Attraction 212,Beer Sheva,Nature,Includes food stands and rest areas.
+213,Attraction 213,Tel Aviv,Water Park,Offers guided tours and events.
+214,Attraction 214,Netanya,Water Park,Includes food stands and rest areas.
+215,Attraction 215,Ashdod,Adventure,Offers guided tours and events.
+216,Attraction 216,Eilat,History,Open all year round.
+217,Attraction 217,Netanya,Amusement Park,Open all year round.
+218,Attraction 218,Nazareth,Family,Suitable for children and families.
+219,Attraction 219,Holon,History,Open all year round.
+220,Attraction 220,Tel Aviv,Museum,Popular attraction with many activities.
+221,Attraction 221,Beer Sheva,Museum,Popular attraction with many activities.
+222,Attraction 222,Haifa,History,Offers guided tours and events.
+223,Attraction 223,Tel Aviv,Science,Suitable for children and families.
+224,Attraction 224,Haifa,Amusement Park,Suitable for children and families.
+225,Attraction 225,Ramat Gan,Water Park,Open all year round.
+226,Attraction 226,Ramat Gan,Water Park,Open all year round.
+227,Attraction 227,Haifa,Museum,Offers guided tours and events.
+228,Attraction 228,Ramat Gan,Adventure,Offers guided tours and events.
+229,Attraction 229,Jerusalem,Water Park,Popular attraction with many activities.
+230,Attraction 230,Eilat,History,Popular attraction with many activities.
+231,Attraction 231,Haifa,Family,Suitable for children and families.
+232,Attraction 232,Nazareth,History,Popular attraction with many activities.
+233,Attraction 233,Tel Aviv,Nature,Popular attraction with many activities.
+234,Attraction 234,Ashdod,Zoo,Offers guided tours and events.
+235,Attraction 235,Jerusalem,Adventure,Offers guided tours and events.
+236,Attraction 236,Jerusalem,Water Park,Popular attraction with many activities.
+237,Attraction 237,Netanya,Nature,Open all year round.
+238,Attraction 238,Haifa,Science,Suitable for children and families.
+239,Attraction 239,Haifa,Water Park,Includes food stands and rest areas.
+240,Attraction 240,Holon,Museum,Includes food stands and rest areas.
+241,Attraction 241,Haifa,History,Open all year round.
+242,Attraction 242,Eilat,Zoo,Offers guided tours and events.
+243,Attraction 243,Holon,History,Suitable for children and families.
+244,Attraction 244,Jerusalem,Water Park,Suitable for children and families.
+245,Attraction 245,Jerusalem,Family,Offers guided tours and events.
+246,Attraction 246,Netanya,Science,Open all year round.
+247,Attraction 247,Haifa,Adventure,Open all year round.
+248,Attraction 248,Jerusalem,Adventure,Includes food stands and rest areas.
+249,Attraction 249,Holon,Family,Includes food stands and rest areas.
+250,Attraction 250,Ramat Gan,Museum,Open all year round.
+251,Attraction 251,Eilat,Kids,Includes food stands and rest areas.
+252,Attraction 252,Nazareth,Adventure,Offers guided tours and events.
+253,Attraction 253,Ramat Gan,Museum,Suitable for children and families.
+254,Attraction 254,Beer Sheva,Science,Popular attraction with many activities.
+255,Attraction 255,Eilat,History,Includes food stands and rest areas.
+256,Attraction 256,Jerusalem,Kids,Popular attraction with many activities.
+257,Attraction 257,Netanya,Nature,Suitable for children and families.
+258,Attraction 258,Ashdod,Family,Offers guided tours and events.
+259,Attraction 259,Netanya,Kids,Suitable for children and families.
+260,Attraction 260,Beer Sheva,Water Park,Popular attraction with many activities.
+261,Attraction 261,Holon,Water Park,Popular attraction with many activities.
+262,Attraction 262,Ramat Gan,Adventure,Popular attraction with many activities.
+263,Attraction 263,Tel Aviv,Science,Includes food stands and rest areas.
+264,Attraction 264,Ramat Gan,Kids,Offers guided tours and events.
+265,Attraction 265,Ashdod,Science,Popular attraction with many activities.
+266,Attraction 266,Nazareth,Kids,Includes food stands and rest areas.
+267,Attraction 267,Haifa,Amusement Park,Popular attraction with many activities.
+268,Attraction 268,Ramat Gan,Water Park,Includes food stands and rest areas.
+269,Attraction 269,Eilat,Zoo,Includes food stands and rest areas.
+270,Attraction 270,Netanya,Science,Includes food stands and rest areas.
+271,Attraction 271,Jerusalem,Amusement Park,Offers guided tours and events.
+272,Attraction 272,Eilat,Museum,Suitable for children and families.
+273,Attraction 273,Jerusalem,Science,Popular attraction with many activities.
+274,Attraction 274,Beer Sheva,Family,Includes food stands and rest areas.
+275,Attraction 275,Tel Aviv,Amusement Park,Suitable for children and families.
+276,Attraction 276,Jerusalem,Museum,Suitable for children and families.
+277,Attraction 277,Tel Aviv,Zoo,Offers guided tours and events.
+278,Attraction 278,Netanya,Kids,Includes food stands and rest areas.
+279,Attraction 279,Ramat Gan,Zoo,Open all year round.
+280,Attraction 280,Haifa,Amusement Park,Popular attraction with many activities.
+281,Attraction 281,Tel Aviv,Nature,Offers guided tours and events.
+282,Attraction 282,Ramat Gan,Kids,Popular attraction with many activities.
+283,Attraction 283,Ramat Gan,Family,Popular attraction with many activities.
+284,Attraction 284,Beer Sheva,History,Includes food stands and rest areas.
+285,Attraction 285,Netanya,Museum,Offers guided tours and events.
+286,Attraction 286,Holon,Zoo,Open all year round.
+287,Attraction 287,Haifa,Amusement Park,Popular attraction with many activities.
+288,Attraction 288,Holon,Water Park,Suitable for children and families.
+289,Attraction 289,Nazareth,Museum,Popular attraction with many activities.
+290,Attraction 290,Tel Aviv,Adventure,Popular attraction with many activities.
+291,Attraction 291,Beer Sheva,Nature,Offers guided tours and events.
+292,Attraction 292,Haifa,Zoo,Popular attraction with many activities.
+293,Attraction 293,Nazareth,Science,Suitable for children and families.
+294,Attraction 294,Netanya,Adventure,Offers guided tours and events.
+295,Attraction 295,Netanya,Amusement Park,Popular attraction with many activities.
+296,Attraction 296,Holon,Nature,Popular attraction with many activities.
+297,Attraction 297,Nazareth,Museum,Suitable for children and families.
+298,Attraction 298,Eilat,Kids,Popular attraction with many activities.
+299,Attraction 299,Ashdod,Water Park,Offers guided tours and events.
+300,Attraction 300,Ramat Gan,Amusement Park,Open all year round.
+301,Attraction 301,Jerusalem,Kids,Offers guided tours and events.
+302,Attraction 302,Tel Aviv,Nature,Suitable for children and families.
+303,Attraction 303,Ramat Gan,Family,Open all year round.
+304,Attraction 304,Holon,Adventure,Offers guided tours and events.
+305,Attraction 305,Netanya,Family,Offers guided tours and events.
+306,Attraction 306,Eilat,Kids,Suitable for children and families.
+307,Attraction 307,Haifa,Museum,Offers guided tours and events.
+308,Attraction 308,Tel Aviv,Adventure,Includes food stands and rest areas.
+309,Attraction 309,Netanya,Museum,Open all year round.
+310,Attraction 310,Tel Aviv,Science,Open all year round.
+311,Attraction 311,Jerusalem,Adventure,Includes food stands and rest areas.
+312,Attraction 312,Eilat,Science,Offers guided tours and events.
+313,Attraction 313,Tel Aviv,Zoo,Open all year round.
+314,Attraction 314,Jerusalem,Museum,Suitable for children and families.
+315,Attraction 315,Nazareth,Science,Open all year round.
+316,Attraction 316,Beer Sheva,Water Park,Includes food stands and rest areas.
+317,Attraction 317,Jerusalem,Kids,Suitable for children and families.
+318,Attraction 318,Ashdod,Water Park,Includes food stands and rest areas.
+319,Attraction 319,Holon,Museum,Offers guided tours and events.
+320,Attraction 320,Haifa,Adventure,Open all year round.
+321,Attraction 321,Ramat Gan,Nature,Offers guided tours and events.
+322,Attraction 322,Netanya,Nature,Offers guided tours and events.
+323,Attraction 323,Ramat Gan,Adventure,Popular attraction with many activities.
+324,Attraction 324,Eilat,Zoo,Includes food stands and rest areas.
+325,Attraction 325,Jerusalem,Zoo,Popular attraction with many activities.
+326,Attraction 326,Haifa,History,Offers guided tours and events.
+327,Attraction 327,Netanya,Science,Popular attraction with many activities.
+328,Attraction 328,Nazareth,Nature,Suitable for children and families.
+329,Attraction 329,Beer Sheva,Amusement Park,Offers guided tours and events.
+330,Attraction 330,Ramat Gan,Water Park,Popular attraction with many activities.
+331,Attraction 331,Haifa,Amusement Park,Includes food stands and rest areas.
+332,Attraction 332,Tel Aviv,Adventure,Open all year round.
+333,Attraction 333,Haifa,Water Park,Suitable for children and families.
+334,Attraction 334,Netanya,Science,Includes food stands and rest areas.
+335,Attraction 335,Tel Aviv,Amusement Park,Open all year round.
+336,Attraction 336,Haifa,Museum,Offers guided tours and events.
+337,Attraction 337,Beer Sheva,Kids,Includes food stands and rest areas.
+338,Attraction 338,Eilat,Water Park,Offers guided tours and events.
+339,Attraction 339,Jerusalem,Zoo,Popular attraction with many activities.
+340,Attraction 340,Tel Aviv,Museum,Suitable for children and families.
+341,Attraction 341,Haifa,Adventure,Offers guided tours and events.
+342,Attraction 342,Netanya,Water Park,Includes food stands and rest areas.
+343,Attraction 343,Holon,Amusement Park,Popular attraction with many activities.
+344,Attraction 344,Tel Aviv,Water Park,Suitable for children and families.
+345,Attraction 345,Beer Sheva,Zoo,Popular attraction with many activities.
+346,Attraction 346,Netanya,Water Park,Popular attraction with many activities.
+347,Attraction 347,Beer Sheva,Museum,Suitable for children and families.
+348,Attraction 348,Holon,Science,Offers guided tours and events.
+349,Attraction 349,Beer Sheva,Museum,Offers guided tours and events.
+350,Attraction 350,Ashdod,Zoo,Open all year round.
+351,Attraction 351,Eilat,Zoo,Open all year round.
+352,Attraction 352,Ramat Gan,History,Suitable for children and families.
+353,Attraction 353,Tel Aviv,Family,Includes food stands and rest areas.
+354,Attraction 354,Holon,Adventure,Open all year round.
+355,Attraction 355,Beer Sheva,Science,Includes food stands and rest areas.
+356,Attraction 356,Beer Sheva,Museum,Popular attraction with many activities.
+357,Attraction 357,Ramat Gan,Science,Suitable for children and families.
+358,Attraction 358,Ashdod,Adventure,Includes food stands and rest areas.
+359,Attraction 359,Eilat,Kids,Popular attraction with many activities.
+360,Attraction 360,Ashdod,Nature,Offers guided tours and events.
+361,Attraction 361,Nazareth,History,Open all year round.
+362,Attraction 362,Holon,Kids,Open all year round.
+363,Attraction 363,Ashdod,Amusement Park,Suitable for children and families.
+364,Attraction 364,Tel Aviv,Nature,Includes food stands and rest areas.
+365,Attraction 365,Eilat,Museum,Open all year round.
+366,Attraction 366,Tel Aviv,History,Includes food stands and rest areas.
+367,Attraction 367,Netanya,Family,Suitable for children and families.
+368,Attraction 368,Haifa,Water Park,Suitable for children and families.
+369,Attraction 369,Eilat,Amusement Park,Includes food stands and rest areas.
+370,Attraction 370,Tel Aviv,Adventure,Includes food stands and rest areas.
+371,Attraction 371,Ashdod,Nature,Suitable for children and families.
+372,Attraction 372,Haifa,Adventure,Includes food stands and rest areas.
+373,Attraction 373,Netanya,Nature,Includes food stands and rest areas.
+374,Attraction 374,Tel Aviv,Nature,Includes food stands and rest areas.
+375,Attraction 375,Holon,Zoo,Includes food stands and rest areas.
+376,Attraction 376,Eilat,History,Includes food stands and rest areas.
+377,Attraction 377,Ramat Gan,Zoo,Offers guided tours and events.
+378,Attraction 378,Tel Aviv,Water Park,Popular attraction with many activities.
+379,Attraction 379,Eilat,Family,Suitable for children and families.
+380,Attraction 380,Tel Aviv,Kids,Offers guided tours and events.
+381,Attraction 381,Tel Aviv,Nature,Includes food stands and rest areas.
+382,Attraction 382,Eilat,Zoo,Open all year round.
+383,Attraction 383,Haifa,Nature,Popular attraction with many activities.
+384,Attraction 384,Tel Aviv,Zoo,Includes food stands and rest areas.
+385,Attraction 385,Haifa,Water Park,Includes food stands and rest areas.
+386,Attraction 386,Netanya,Water Park,Open all year round.
+387,Attraction 387,Ashdod,Family,Popular attraction with many activities.
+388,Attraction 388,Netanya,Amusement Park,Open all year round.
+389,Attraction 389,Haifa,Zoo,Offers guided tours and events.
+390,Attraction 390,Beer Sheva,Nature,Suitable for children and families.
+391,Attraction 391,Nazareth,Family,Open all year round.
+392,Attraction 392,Eilat,Family,Suitable for children and families.
+393,Attraction 393,Ashdod,Amusement Park,Open all year round.
+394,Attraction 394,Haifa,Zoo,Popular attraction with many activities.
+395,Attraction 395,Holon,Science,Includes food stands and rest areas.
+396,Attraction 396,Tel Aviv,Zoo,Includes food stands and rest areas.
+397,Attraction 397,Netanya,Family,Suitable for children and families.
+398,Attraction 398,Holon,Water Park,Offers guided tours and events.
+399,Attraction 399,Haifa,Nature,Popular attraction with many activities.
+400,Attraction 400,Eilat,Nature,Open all year round.
+401,Attraction 401,Haifa,Water Park,Open all year round.
+402,Attraction 402,Beer Sheva,Museum,Open all year round.
+403,Attraction 403,Eilat,Adventure,Popular attraction with many activities.
+404,Attraction 404,Netanya,Amusement Park,Popular attraction with many activities.
+405,Attraction 405,Tel Aviv,Museum,Offers guided tours and events.
+406,Attraction 406,Beer Sheva,Science,Suitable for children and families.
+407,Attraction 407,Ashdod,History,Offers guided tours and events.
+408,Attraction 408,Netanya,Kids,Offers guided tours and events.
+409,Attraction 409,Jerusalem,History,Includes food stands and rest areas.
+410,Attraction 410,Eilat,Zoo,Offers guided tours and events.
+411,Attraction 411,Jerusalem,Museum,Open all year round.
+412,Attraction 412,Tel Aviv,Nature,Open all year round.
+413,Attraction 413,Jerusalem,Water Park,Open all year round.
+414,Attraction 414,Haifa,Science,Suitable for children and families.
+415,Attraction 415,Jerusalem,Kids,Popular attraction with many activities.
+416,Attraction 416,Netanya,Family,Includes food stands and rest areas.
+417,Attraction 417,Beer Sheva,Museum,Offers guided tours and events.
+418,Attraction 418,Haifa,Family,Offers guided tours and events.
+419,Attraction 419,Haifa,Museum,Popular attraction with many activities.
+420,Attraction 420,Netanya,Adventure,Suitable for children and families.
+421,Attraction 421,Ashdod,Kids,Includes food stands and rest areas.
+422,Attraction 422,Ramat Gan,Amusement Park,Open all year round.
+423,Attraction 423,Eilat,Water Park,Popular attraction with many activities.
+424,Attraction 424,Ashdod,Family,Includes food stands and rest areas.
+425,Attraction 425,Beer Sheva,Zoo,Popular attraction with many activities.
+426,Attraction 426,Netanya,Museum,Offers guided tours and events.
+427,Attraction 427,Jerusalem,Amusement Park,Includes food stands and rest areas.
+428,Attraction 428,Beer Sheva,Adventure,Popular attraction with many activities.
+429,Attraction 429,Tel Aviv,Adventure,Suitable for children and families.
+430,Attraction 430,Ramat Gan,Water Park,Offers guided tours and events.
+431,Attraction 431,Jerusalem,Amusement Park,Offers guided tours and events.
+432,Attraction 432,Beer Sheva,History,Open all year round.
+433,Attraction 433,Jerusalem,Kids,Offers guided tours and events.
+434,Attraction 434,Haifa,Nature,Offers guided tours and events.
+435,Attraction 435,Netanya,Zoo,Offers guided tours and events.
+436,Attraction 436,Tel Aviv,Amusement Park,Offers guided tours and events.
+437,Attraction 437,Beer Sheva,Amusement Park,Suitable for children and families.
+438,Attraction 438,Ramat Gan,Family,Popular attraction with many activities.
+439,Attraction 439,Haifa,Water Park,Popular attraction with many activities.
+440,Attraction 440,Netanya,Kids,Offers guided tours and events.
+441,Attraction 441,Holon,Adventure,Includes food stands and rest areas.
+442,Attraction 442,Tel Aviv,Science,Includes food stands and rest areas.
+443,Attraction 443,Ashdod,Kids,Offers guided tours and events.
+444,Attraction 444,Holon,Adventure,Offers guided tours and events.
+445,Attraction 445,Ramat Gan,Water Park,Offers guided tours and events.
+446,Attraction 446,Tel Aviv,Kids,Includes food stands and rest areas.
+447,Attraction 447,Nazareth,Family,Includes food stands and rest areas.
+448,Attraction 448,Haifa,Water Park,Offers guided tours and events.
+449,Attraction 449,Haifa,Zoo,Suitable for children and families.
+450,Attraction 450,Eilat,Zoo,Popular attraction with many activities.
+451,Attraction 451,Ashdod,Water Park,Offers guided tours and events.
+452,Attraction 452,Eilat,Zoo,Includes food stands and rest areas.
+453,Attraction 453,Ramat Gan,Nature,Popular attraction with many activities.
+454,Attraction 454,Jerusalem,Science,Includes food stands and rest areas.
+455,Attraction 455,Ashdod,Kids,Open all year round.
+456,Attraction 456,Ramat Gan,Kids,Offers guided tours and events.
+457,Attraction 457,Tel Aviv,Family,Includes food stands and rest areas.
+458,Attraction 458,Nazareth,Science,Popular attraction with many activities.
+459,Attraction 459,Ashdod,Zoo,Suitable for children and families.
+460,Attraction 460,Holon,Family,Includes food stands and rest areas.
+461,Attraction 461,Jerusalem,Water Park,Includes food stands and rest areas.
+462,Attraction 462,Jerusalem,Amusement Park,Includes food stands and rest areas.
+463,Attraction 463,Netanya,Science,Open all year round.
+464,Attraction 464,Ashdod,History,Includes food stands and rest areas.
+465,Attraction 465,Holon,History,Popular attraction with many activities.
+466,Attraction 466,Haifa,Amusement Park,Offers guided tours and events.
+467,Attraction 467,Haifa,Family,Includes food stands and rest areas.
+468,Attraction 468,Ashdod,Museum,Offers guided tours and events.
+469,Attraction 469,Netanya,Adventure,Popular attraction with many activities.
+470,Attraction 470,Beer Sheva,Amusement Park,Open all year round.
+471,Attraction 471,Tel Aviv,Nature,Open all year round.
+472,Attraction 472,Ramat Gan,Amusement Park,Offers guided tours and events.
+473,Attraction 473,Jerusalem,Adventure,Suitable for children and families.
+474,Attraction 474,Ramat Gan,History,Open all year round.
+475,Attraction 475,Ramat Gan,Science,Includes food stands and rest areas.
+476,Attraction 476,Jerusalem,Adventure,Offers guided tours and events.
+477,Attraction 477,Eilat,Science,Offers guided tours and events.
+478,Attraction 478,Nazareth,Nature,Popular attraction with many activities.
+479,Attraction 479,Nazareth,Zoo,Popular attraction with many activities.
+480,Attraction 480,Ramat Gan,Kids,Offers guided tours and events.
+481,Attraction 481,Haifa,Kids,Includes food stands and rest areas.
+482,Attraction 482,Tel Aviv,Zoo,Suitable for children and families.
+483,Attraction 483,Eilat,Museum,Suitable for children and families.
+484,Attraction 484,Tel Aviv,History,Popular attraction with many activities.
+485,Attraction 485,Netanya,Adventure,Open all year round.
+486,Attraction 486,Netanya,History,Includes food stands and rest areas.
+487,Attraction 487,Ashdod,Water Park,Popular attraction with many activities.
+488,Attraction 488,Eilat,Nature,Offers guided tours and events.
+489,Attraction 489,Holon,History,Suitable for children and families.
+490,Attraction 490,Beer Sheva,Family,Includes food stands and rest areas.
+491,Attraction 491,Netanya,Nature,Suitable for children and families.
+492,Attraction 492,Ramat Gan,Water Park,Open all year round.
+493,Attraction 493,Tel Aviv,Science,Popular attraction with many activities.
+494,Attraction 494,Haifa,Family,Suitable for children and families.
+495,Attraction 495,Eilat,Adventure,Suitable for children and families.
+496,Attraction 496,Ramat Gan,Science,Includes food stands and rest areas.
+497,Attraction 497,Tel Aviv,Museum,Offers guided tours and events.
+498,Attraction 498,Haifa,Zoo,Includes food stands and rest areas.
+499,Attraction 499,Tel Aviv,Adventure,Open all year round.
+500,Attraction 500,Holon,Amusement Park,Open all year round.

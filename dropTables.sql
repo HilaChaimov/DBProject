@@ -1,0 +1,11 @@
+-- ============================================
+-- DROP TABLES
+-- This script drops all tables in reverse dependency order
+-- ============================================
+
+DROP TABLE IF EXISTS REVIEWREPORT CASCADE;
+DROP TABLE IF EXISTS REVIEWREACTION CASCADE;
+DROP TABLE IF EXISTS REVIEW CASCADE;
+DROP TABLE IF EXISTS TICKET CASCADE;
+DROP TABLE IF EXISTS CUSTOMER CASCADE;
+DROP TABLE IF EXISTS ATTRACTION CASCADE;
