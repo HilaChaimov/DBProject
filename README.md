@@ -2,7 +2,6 @@
 
 ## Database Mini Project  
 **Submitted by:** Hila Chaimov, Talya Yakov  
-
 **System:** Attractions and Tourism  
 **Selected Unit:** Review System  
 
@@ -45,18 +44,12 @@ The system was designed in a **top-down approach**, as required in the project i
 
 In the first stage of the project, we designed the system screens using **Google AI Studio**.  
 These screens helped us understand the user flow and define the database entities and relationships.
+<img width="597" height="584" alt="צילום מסך 2026-03-17 012201" src="https://github.com/user-attachments/assets/c2a88a53-8df7-433d-879e-c3d4f69b1ef2" />
+<img width="908" height="604" alt="צילום מסך 2026-03-17 012146" src="https://github.com/user-attachments/assets/408ef400-e74c-4752-b2ac-6290c0962f55" />
+<img width="1524" height="771" alt="צילום מסך 2026-03-17 012138" src="https://github.com/user-attachments/assets/3130d251-c7e8-4302-9d2a-f1042de7f803" />
+<img width="1735" height="751" alt="צילום מסך 2026-03-17 012106" src="https://github.com/user-attachments/assets/e9fe2307-079b-4d9c-826e-c6a3ebed6f9c" />
+<img width="911" height="788" alt="צילום מסך 2026-03-17 012240" src="https://github.com/user-attachments/assets/b1f7e65b-ef5c-48ad-bd71-a64afafe46dc" />
 
-## Screen 1
-![AI Screen 1](PASTE_SCREEN_1_IMAGE_HERE)
-
-## Screen 2
-![AI Screen 2](PASTE_SCREEN_2_IMAGE_HERE)
-
-## Screen 3
-![AI Screen 3](PASTE_SCREEN_3_IMAGE_HERE)
-
-## Screen 4
-![AI Screen 4](PASTE_SCREEN_4_IMAGE_HERE)
 
 ---
 
@@ -172,16 +165,11 @@ This method is useful for testing the schema, verifying constraints, and inserti
 
 ---
 
-## Method 3 – Additional Insertion Method
+## Method 3 – mockaroo
+<img width="1882" height="734" alt="image" src="https://github.com/user-attachments/assets/16fb511e-e711-4332-9a16-66c10e2024b1" />
+<img width="1877" height="756" alt="צילום מסך 2026-04-14 135335" src="https://github.com/user-attachments/assets/d30c59d6-d064-4c4e-99d8-0d0cdde8e73d" />
 
-**This part is still missing and should be completed.**
 
-According to the project instructions, at least **three methods** of data insertion should be demonstrated. :contentReference[oaicite:5]{index=5}
-
-Possible options:
-- additional SQL insert generation
-- import from external generated files
-- use of a data generation website such as Mockaroo / GenerateData
 
 ### Screenshot
 ![Third Method Screenshot](PASTE_THIRD_METHOD_SCREENSHOT_HERE)
@@ -193,10 +181,8 @@ Possible options:
 
 # Backup and Restore
 
-**This section has not been completed yet.**
+<img width="879" height="678" alt="image" src="https://github.com/user-attachments/assets/bcf5ba63-19cd-48e5-8ba1-b2f6deb2ce33" />
 
-According to the project requirements, the project should include:
-- a database backup
 - a restore process
 - screenshots of both actions in the README :contentReference[oaicite:6]{index=6}
 
