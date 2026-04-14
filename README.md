@@ -70,7 +70,7 @@ These screens helped us understand the user flow and define the database entitie
 
 The following ERD describes the main entities in the system and the relationships between them.
 
-![ERD Diagram](PASTE_ERD_IMAGE_HERE)
+<img width="4512" height="1902" alt="erdplus (1)" src="https://github.com/user-attachments/assets/391c44bf-60ce-4bc0-a108-985ad8a48be6" />
 
 ---
 
@@ -78,7 +78,7 @@ The following ERD describes the main entities in the system and the relationship
 
 The following DSD presents the relational schema generated from the ERD design.
 
-![DSD Diagram](PASTE_DSD_IMAGE_HERE)
+<img width="4512" height="1902" alt="erdplus (2)" src="https://github.com/user-attachments/assets/586a90d7-e036-473c-80a2-cb3a18d12e20" />
 
 ---
 
