@@ -166,13 +166,12 @@ This method is useful for testing the schema, verifying constraints, and inserti
 ---
 
 ## Method 3 – mockaroo
-<img width="1882" height="734" alt="image" src="https://github.com/user-attachments/assets/16fb511e-e711-4332-9a16-66c10e2024b1" />
-<img width="1877" height="756" alt="צילום מסך 2026-04-14 135335" src="https://github.com/user-attachments/assets/d30c59d6-d064-4c4e-99d8-0d0cdde8e73d" />
-
 
 
 ### Screenshot
-![Third Method Screenshot](PASTE_THIRD_METHOD_SCREENSHOT_HERE)
+<img width="1882" height="734" alt="image" src="https://github.com/user-attachments/assets/16fb511e-e711-4332-9a16-66c10e2024b1" />
+<img width="1877" height="756" alt="צילום מסך 2026-04-14 135335" src="https://github.com/user-attachments/assets/d30c59d6-d064-4c4e-99d8-0d0cdde8e73d" />
+
 
 ### Relevant Files
 - `PASTE_RELEVANT_FILES_HERE`
