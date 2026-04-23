@@ -141,13 +141,17 @@ In this method, a Python script was used to generate CSV files containing data f
 This method is useful for generating a large amount of structured data efficiently and preparing it for import into the database.
 
 ### Screenshot
-![CSV Generation Screenshot](PASTE_CSV_SCREENSHOT_HERE)
+<img width="995" height="857" alt="image" src="https://github.com/user-attachments/assets/03b0044f-af53-4c7d-9d0c-74d8692d03a7" />
 
 ### Relevant Files
-- Python script that generates CSV files
-- CSV files for the relevant tables
-- SQL import file for loading the CSV data into the database
-
+- `DataImportFiles/generate_csv_data.py`
+- `DataImportFiles/customer.csv`
+- `DataImportFiles/attraction.csv`
+- `DataImportFiles/ticket.csv`
+- `DataImportFiles/review.csv`
+- `DataImportFiles/reviewreaction.csv`
+- `DataImportFiles/reviewreport.csv`
+- `DataImportFiles/import_from_csv.sql`
 ---
 
 ## Method 2 – Manual Insertion
@@ -158,10 +162,11 @@ In this method, data was inserted manually using SQL `INSERT` statements.
 This method is useful for testing the schema, verifying constraints, and inserting initial sample records.
 
 ### Screenshot
-![Manual Insert Screenshot](PASTE_MANUAL_INSERT_SCREENSHOT_HERE)
+<img width="1066" height="844" alt="image" src="https://github.com/user-attachments/assets/64be801e-17a7-442e-83c6-fcac554aa4d9" />
+
 
 ### Relevant Files
-- `insertTables.sql` or another manual insert SQL file
+- `insertTables.sql`
 
 ---
 
@@ -174,22 +179,23 @@ This method is useful for testing the schema, verifying constraints, and inserti
 
 
 ### Relevant Files
-- `PASTE_RELEVANT_FILES_HERE`
-
+- `DataImportFiles/atraction2.csv`
 ---
 
 # Backup and Restore
 
-<img width="879" height="678" alt="image" src="https://github.com/user-attachments/assets/bcf5ba63-19cd-48e5-8ba1-b2f6deb2ce33" />
 
-- a restore process
-- screenshots of both actions in the README :contentReference[oaicite:6]{index=6}
 
 ## Backup
-Not completed yet.
+<img width="879" height="678" alt="image" src="https://github.com/user-attachments/assets/bcf5ba63-19cd-48e5-8ba1-b2f6deb2ce33" />
+
+A backup of the database was created and saved as:
+- `backup_2026-04-14.backup`
 
 ## Restore
-Not completed yet.
+<img width="1843" height="820" alt="image" src="https://github.com/user-attachments/assets/00e3e9b1-f7ac-4b38-89a1-c7e9b23818fe" />
+
+The restore process was performed using the backup file in order to verify that the database can be recovered successfully.
 
 ---
 
