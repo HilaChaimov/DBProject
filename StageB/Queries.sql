@@ -284,220 +284,124 @@ ORDER BY report_year DESC, report_month DESC, reports_count DESC;
 
 -- ============================================
 -- UPDATE 1
--- עדכון סטטוס כרטיס
+-- Update Ticket Status
 -- ============================================
 
--- לפני
+-- Before
 SELECT *
 FROM TICKET
-WHERE ticket_id = (
-    SELECT MIN(ticket_id)
-    FROM TICKET
-    WHERE ticket_status <> 'used'
-);
+WHERE ticket_id = 150;
 
--- עדכון
+-- Update
 UPDATE TICKET
 SET ticket_status = 'used'
-WHERE ticket_id = (
-    SELECT MIN(ticket_id)
-    FROM TICKET
-    WHERE ticket_status <> 'used'
-);
+WHERE ticket_id = 150;
 
--- אחרי
+-- After
 SELECT *
 FROM TICKET
-WHERE ticket_id = (
-    SELECT MIN(ticket_id)
-    FROM TICKET
-    WHERE ticket_status = 'used'
-);
+WHERE ticket_id = 150;
 
 
 -- ============================================
 -- UPDATE 2
--- עדכון החלטת מנהל בדיווח + תאריך החלטה
+-- Update Admin Decision in Review Report
 -- ============================================
 
--- לפני
+-- Before
 SELECT *
 FROM REVIEWREPORT
-WHERE report_id = (
-    SELECT MIN(report_id)
-    FROM REVIEWREPORT
-    WHERE admin_decision IS NULL
-);
+WHERE report_id = 2;
 
--- עדכון
+-- Update
 UPDATE REVIEWREPORT
 SET admin_decision = 'approved',
     decision_date = CURRENT_DATE
-WHERE report_id = (
-    SELECT MIN(report_id)
-    FROM REVIEWREPORT
-    WHERE admin_decision IS NULL
-);
+WHERE report_id = 2;
 
--- אחרי
+-- After
 SELECT *
 FROM REVIEWREPORT
-WHERE report_id = (
-    SELECT MIN(report_id)
-    FROM REVIEWREPORT
-    WHERE admin_decision = 'approved'
-      AND decision_date = CURRENT_DATE
-);
+WHERE report_id = 2;
 
 
 -- ============================================
 -- UPDATE 3
--- סימון ביקורת כמחוקה
+-- Mark Review as Deleted
 -- ============================================
 
--- לפני
+-- Before
 SELECT *
 FROM REVIEW
-WHERE review_id = (
-    SELECT MIN(review_id)
-    FROM REVIEW
-    WHERE is_deleted = FALSE
-);
+WHERE review_id = 1;
 
--- עדכון
+-- Update
 UPDATE REVIEW
 SET is_deleted = TRUE,
     deleted_date = CURRENT_DATE
-WHERE review_id = (
-    SELECT MIN(review_id)
-    FROM REVIEW
-    WHERE is_deleted = FALSE
-);
+WHERE review_id = 1;
 
--- אחרי
+-- After
 SELECT *
 FROM REVIEW
-WHERE review_id = (
-    SELECT MIN(review_id)
-    FROM REVIEW
-    WHERE is_deleted = TRUE
-      AND deleted_date = CURRENT_DATE
-);
+WHERE review_id = 1;
 
 
 -- ============================================
 -- DELETE 1
--- מחיקת תגובה אחת
+-- Delete One Review Reaction
 -- ============================================
 
--- לפני
+-- Before
 SELECT *
 FROM REVIEWREACTION
-WHERE reaction_id = (
-    SELECT MIN(reaction_id)
-    FROM REVIEWREACTION
-);
+WHERE reaction_id = 15;
 
--- מחיקה
+-- Delete
 DELETE FROM REVIEWREACTION
-WHERE reaction_id = (
-    SELECT MIN(reaction_id)
-    FROM REVIEWREACTION
-);
+WHERE reaction_id = 15;
 
--- אחרי
+-- After
 SELECT *
 FROM REVIEWREACTION
-WHERE reaction_id = (
-    SELECT MIN(reaction_id)
-    FROM REVIEWREACTION
-);
+WHERE reaction_id = 15;
 
 
 -- ============================================
 -- DELETE 2
--- מחיקת דיווח אחד
+-- Delete One Review Report
 -- ============================================
 
--- לפני
+-- Before
 SELECT *
 FROM REVIEWREPORT
-WHERE report_id = (
-    SELECT MIN(report_id)
-    FROM REVIEWREPORT
-);
+WHERE report_id = 20;
 
--- מחיקה
+-- Delete
 DELETE FROM REVIEWREPORT
-WHERE report_id = (
-    SELECT MIN(report_id)
-    FROM REVIEWREPORT
-);
+WHERE report_id = 20;
 
--- אחרי
+-- After
 SELECT *
 FROM REVIEWREPORT
-WHERE report_id = (
-    SELECT MIN(report_id)
-    FROM REVIEWREPORT
-);
+WHERE report_id = 20;
 
 
 -- ============================================
 -- DELETE 3
--- מחיקת ביקורת שאין לה תגובות ואין לה דיווחים
--- כדי לא להיתקע על FK
+-- Delete One Review with No Reactions and No Reports
 -- ============================================
 
--- לפני
+-- Before
 SELECT *
 FROM REVIEW
-WHERE review_id = (
-    SELECT MIN(r.review_id)
-    FROM REVIEW r
-    WHERE NOT EXISTS (
-        SELECT 1
-        FROM REVIEWREACTION rr
-        WHERE rr.review_id = r.review_id
-    )
-      AND NOT EXISTS (
-        SELECT 1
-        FROM REVIEWREPORT rep
-        WHERE rep.review_id = r.review_id
-    )
-);
+WHERE review_id = 25;
 
--- מחיקה
+-- Delete
 DELETE FROM REVIEW
-WHERE review_id = (
-    SELECT MIN(r.review_id)
-    FROM REVIEW r
-    WHERE NOT EXISTS (
-        SELECT 1
-        FROM REVIEWREACTION rr
-        WHERE rr.review_id = r.review_id
-    )
-      AND NOT EXISTS (
-        SELECT 1
-        FROM REVIEWREPORT rep
-        WHERE rep.review_id = r.review_id
-    )
-);
+WHERE review_id = 25;
 
--- אחרי
+-- After
 SELECT *
 FROM REVIEW
-WHERE review_id = (
-    SELECT MIN(r.review_id)
-    FROM REVIEW r
-    WHERE NOT EXISTS (
-        SELECT 1
-        FROM REVIEWREACTION rr
-        WHERE rr.review_id = r.review_id
-    )
-      AND NOT EXISTS (
-        SELECT 1
-        FROM REVIEWREPORT rep
-        WHERE rep.review_id = r.review_id
-    )
-);
+WHERE review_id = 25;

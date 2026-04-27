@@ -1,30 +1,30 @@
 -- ============================================
 -- CONSTRAINT 1
--- הגבלת ticket_status לערכים חוקיים בלבד
+-- Valid Ticket Status Values
 -- ============================================
 
 ALTER TABLE TICKET
 ADD CONSTRAINT chk_ticket_status
 CHECK (ticket_status IN ('active', 'used', 'cancelled'));
 
--- בדיקת האילוץ - אמור להיכשל
+-- Invalid Insert Test
 INSERT INTO TICKET
 (ticket_id, purchase_date, visit_date, price, ticket_status, customer_id, attraction_id)
 VALUES
 (
-    99999901,
+    401,
     CURRENT_DATE,
     CURRENT_DATE + INTERVAL '7 days',
     100.00,
     'invalid_status',
-    (SELECT MIN(customer_id) FROM CUSTOMER),
-    (SELECT MIN(attraction_id) FROM ATTRACTION)
+    1,
+    1
 );
 
 
 -- ============================================
 -- CONSTRAINT 2
--- אם review לא מחוקה, deleted_date חייב להיות NULL
+-- Review Deletion Logic
 -- ============================================
 
 ALTER TABLE REVIEW
@@ -35,25 +35,25 @@ CHECK (
     (is_deleted = TRUE AND deleted_date IS NOT NULL)
 );
 
--- בדיקת האילוץ - אמור להיכשל
+-- Invalid Insert Test
 INSERT INTO REVIEW
 (review_id, rating, title, content, review_date, is_deleted, deleted_date, ticket_id)
 VALUES
 (
-    99999902,
+    402,
     4,
-    'Test Review',
-    'This review should fail because deleted_date is not null while is_deleted is false',
+    'Invalid Review',
+    'This insert should fail because the deletion fields are inconsistent.',
     CURRENT_DATE,
     FALSE,
     CURRENT_DATE,
-    (SELECT MIN(ticket_id) FROM TICKET)
+    1
 );
 
 
 -- ============================================
 -- CONSTRAINT 3
--- אם קיימת החלטת מנהל, חייב להיות decision_date
+-- Admin Decision Requires Decision Date
 -- ============================================
 
 ALTER TABLE REVIEWREPORT
@@ -64,17 +64,17 @@ CHECK (
     (admin_decision IS NOT NULL AND decision_date IS NOT NULL)
 );
 
--- בדיקת האילוץ - אמור להיכשל
+-- Invalid Insert Test
 INSERT INTO REVIEWREPORT
 (report_id, report_reason, report_description, report_date, admin_decision, decision_date, customer_id, review_id)
 VALUES
 (
-    99999903,
+    403,
     'spam',
-    'This report should fail because decision exists without decision_date',
+    'This insert should fail because admin_decision exists without decision_date.',
     CURRENT_DATE,
     'approved',
     NULL,
-    (SELECT MIN(customer_id) FROM CUSTOMER),
-    (SELECT MIN(review_id) FROM REVIEW)
+    1,
+    1
 );
