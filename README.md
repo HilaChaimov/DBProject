@@ -407,26 +407,37 @@ SELECT
     r.review_date,
     r.is_deleted,
     r.ticket_id,
+
     (SELECT c.full_name
      FROM CUSTOMER c
      JOIN TICKET t ON c.customer_id = t.customer_id
      WHERE t.ticket_id = r.ticket_id) AS full_name,
+
     (SELECT a.attraction_name
      FROM ATTRACTION a
      JOIN TICKET t ON a.attraction_id = t.attraction_id
      WHERE t.ticket_id = r.ticket_id) AS attraction_name,
+
     (SELECT a.city
      FROM ATTRACTION a
      JOIN TICKET t ON a.attraction_id = t.attraction_id
      WHERE t.ticket_id = r.ticket_id) AS city
+
 FROM REVIEW r
+WHERE EXISTS (
+    SELECT 1
+    FROM TICKET t
+    JOIN CUSTOMER c ON t.customer_id = c.customer_id
+    JOIN ATTRACTION a ON t.attraction_id = a.attraction_id
+    WHERE t.ticket_id = r.ticket_id
+)
 ORDER BY r.review_date DESC, r.review_id;
 ```
 
 
 #### Run and Result Screenshot
 
-<img width="1500" height="817" alt="image" src="https://github.com/user-attachments/assets/0d0b35e9-d890-436f-9867-c22203233c3d" />
+<img width="1062" height="672" alt="image" src="https://github.com/user-attachments/assets/4ba6a5e5-74b9-48ee-b28a-ed3e05b9eb02" />
 
 #### Comparison and Efficiency
 
