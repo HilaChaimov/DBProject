@@ -1,4 +1,4 @@
-# DBProject
+איא# DBProject
 
 ## Database Mini Project  
 
@@ -21,7 +21,7 @@
 7. [Data Insertion Methods](#data-insertion-methods)
 8. [Backup and Restore](#backup-and-restore)
 9. [Stage B – Queries and Constraints](#stage-b--queries-and-constraints)
-10. [Stage C Submission Files](#stage-c-submission-files)
+10. [Stage C – Integration and Views](#stage-c--integration-and-views)
 11. [Summary](#summary)
 
 
@@ -1545,6 +1545,379 @@ The new tables created as part of the integration include:
 At the end of the process, we had an integrated database that combines the data and structure of both systems while maintaining a clear and normalized schema.
 
 
+---
+
+
+## Views
+
+In this stage we created three views on the integrated database `dbintegrated`.  
+Each view represents a different perspective on the combined data.  
+For each view we also wrote two meaningful queries.
+
+---
+
+### View 1: view_review_details
+
+#### Description
+
+This view presents the full details of ticket-based reviews from our original system.  
+It combines the `review`, `ticket`, `customer`, `attraction`, `reviewreaction`, and `reviewreport` tables into one unified row per review.  
+It is useful for displaying review details alongside customer identity, attraction information, and moderation data (reactions and reports).
+
+#### SQL Code
+
+```sql
+CREATE OR REPLACE VIEW view_review_details AS
+SELECT
+    r.review_id, r.rating, r.title, r.content, r.review_date, r.is_deleted,
+    c.customer_id, c.full_name AS customer_name, c.email AS customer_email,
+    a.attraction_id, a.attraction_name, a.city, a.category,
+    t.ticket_id, t.visit_date,
+    COUNT(rr.reaction_id) FILTER (WHERE rr.reaction_type = 'like')    AS likes_count,
+    COUNT(rr.reaction_id) FILTER (WHERE rr.reaction_type = 'dislike') AS dislikes_count,
+    COUNT(DISTINCT rep.report_id)                                       AS reports_count
+FROM review r
+JOIN ticket t ON r.ticket_id = t.ticket_id
+JOIN customer c ON t.customer_id = c.customer_id
+JOIN attraction a ON t.attraction_id = a.attraction_id
+LEFT JOIN reviewreaction rr ON r.review_id = rr.review_id
+LEFT JOIN reviewreport rep ON r.review_id = rep.review_id
+WHERE r.ticket_id IS NOT NULL
+GROUP BY r.review_id, r.rating, r.title, r.content, r.review_date, r.is_deleted,
+         c.customer_id, c.full_name, c.email,
+         a.attraction_id, a.attraction_name, a.city, a.category,
+         t.ticket_id, t.visit_date;
+```
+
+#### SELECT * Output (10 rows)
+
+```
+ review_id | customer_name  | attraction_name |   city   | rating | review_date | likes_count | dislikes_count | reports_count
+-----------+----------------+-----------------+----------+--------+-------------+-------------+----------------+--------------
+         1 | Bar Sharabi    | Attraction 379  | Eilat    |      2 | 2024-11-17  |           0 |              0 |             0
+         2 | Hila Mor       | Attraction 328  | Nazareth |      3 | 2024-08-13  |           0 |              0 |             0
+         3 | Bar Ben David  | Attraction 275  | Tel Aviv |      5 | 2024-11-24  |           0 |              0 |             0
+         4 | Amit David     | Attraction 135  | Nazareth |      2 | 2024-02-13  |           0 |              0 |             0
+         5 | Ofir Biton     | Attraction 59   | Nazareth |      3 | 2024-02-23  |           0 |              0 |             0
+         6 | Hila Levi      | Attraction 318  | Ashdod   |      1 | 2024-06-10  |           0 |              0 |             0
+         7 | Shira Dayan    | Attraction 34   | Netanya  |      2 | 2024-01-21  |           0 |              0 |             0
+         8 | Yael Katz      | Attraction 487  | Ashdod   |      3 | 2025-01-06  |           0 |              0 |             0
+         9 | Bar Mor        | Attraction 288  | Holon    |      3 | 2024-08-24  |           0 |              0 |             0
+        10 | Shelly Azulay  | Attraction 37   | Nazareth |      3 | 2024-06-10  |           0 |              0 |             0
+```
+
+---
+
+#### View 1 – Query 1: Top 10 Most-Reviewed Attractions
+
+**Description:** Shows the ten attractions with the most reviews in our system, including average rating and total reactions. Useful for a "top attractions" display screen.
+
+```sql
+SELECT attraction_name, city, category,
+       COUNT(*) AS review_count,
+       ROUND(AVG(rating), 2) AS avg_rating,
+       SUM(likes_count) AS total_likes,
+       SUM(dislikes_count) AS total_dislikes
+FROM view_review_details
+GROUP BY attraction_name, city, category
+ORDER BY review_count DESC, avg_rating DESC
+LIMIT 10;
+```
+
+**Output:**
+
+```
+ attraction_name |    city    |    category    | review_count | avg_rating | total_likes | total_dislikes
+-----------------+------------+----------------+--------------+------------+-------------+---------------
+ Attraction 337  | Beer Sheva | Kids           |           67 |       3.07 |           0 |             0
+ Attraction 165  | Holon      | Zoo            |           67 |       3.01 |           0 |             0
+ Attraction 108  | Netanya    | Family         |           66 |       3.05 |           0 |             0
+ Attraction 443  | Ashdod     | Kids           |           65 |       2.97 |           1 |             0
+ Attraction 39   | Tel Aviv   | Water Park     |           65 |       3.45 |           0 |             0
+ Attraction 292  | Haifa      | Zoo            |           62 |       3.27 |           0 |             0
+ Attraction 242  | Eilat      | Zoo            |           60 |       2.88 |           0 |             0
+ Attraction 391  | Nazareth   | Family         |           60 |       2.98 |           1 |             0
+ Attraction 5    | Eilat      | Amusement Park |           59 |       3.15 |           1 |             0
+ Attraction 51   | Nazareth   | Zoo            |           59 |       2.75 |           0 |             0
+```
+
+---
+
+#### View 1 – Query 2: Active Reviews with at Least One Report
+
+**Description:** Shows active (not deleted) reviews that were reported at least once, ordered by number of reports. Useful for the admin moderation queue.
+
+```sql
+SELECT review_id, customer_name, attraction_name, rating,
+       review_date, reports_count, likes_count, dislikes_count
+FROM view_review_details
+WHERE is_deleted = FALSE AND reports_count > 0
+ORDER BY reports_count DESC, review_date DESC
+LIMIT 10;
+```
+
+**Output:**
+
+```
+ review_id | customer_name  | attraction_name | rating | review_date | reports_count | likes_count | dislikes_count
+-----------+----------------+-----------------+--------+-------------+---------------+-------------+---------------
+      8948 | Tal Aharon     | Attraction 443  |      4 | 2024-10-21  |             2 |           0 |             0
+     11488 | Neta Mizrahi   | Attraction 319  |      2 | 2024-09-15  |             2 |           0 |             0
+       218 | Shelly Levi    | Attraction 138  |      3 | 2024-11-23  |             1 |           0 |             0
+       330 | Hila Peretz    | Attraction 388  |      2 | 2024-07-01  |             1 |           0 |             0
+       489 | Ofir Yosef     | Attraction 31   |      3 | 2024-01-15  |             1 |           0 |             0
+       539 | Shira Sharabi  | Attraction 473  |      1 | 2024-06-13  |             1 |           0 |             0
+       807 | Eden Abutbul   | Attraction 139  |      4 | 2024-11-09  |             1 |           0 |             0
+       606 | Amit Aharon    | Attraction 139  |      4 | 2024-08-22  |             1 |           0 |             0
+       812 | Hila Azulay    | Attraction 385  |      4 | 2025-03-01  |             1 |           0 |             0
+       305 | Hila Haddad    | Attraction 410  |      3 | 2024-04-12  |             1 |           0 |             0
+```
+
+---
+
+### View 2: view_booking_summary
+
+#### Description
+
+This view presents full booking information from the booking system (outerDB).  
+It combines the `booking`, `customer`, `booking_details`, `attraction`, `difficulty_level`, and `category` tables.  
+It is useful for displaying group reservation details together with attraction classification and pricing.
+
+#### SQL Code
+
+```sql
+CREATE OR REPLACE VIEW view_booking_summary AS
+SELECT
+    b.booking_id, b.booking_date, b.status AS booking_status,
+    b.total_ticket_count, b.contact_name, b.contact_email,
+    c.customer_id, c.full_name AS customer_name,
+    a.attraction_id, a.attraction_name, a.city AS attraction_location,
+    a.avg_rating, dl.name AS difficulty_level, cat.name AS category_name,
+    bd.ticket_count AS tickets_for_this_attraction,
+    a.price_per_person,
+    (bd.ticket_count * a.price_per_person) AS subtotal
+FROM booking b
+JOIN customer c ON b.customer_id = c.customer_id
+JOIN booking_details bd ON b.booking_id = bd.booking_id
+JOIN attraction a ON bd.attraction_id = a.attraction_id
+LEFT JOIN difficulty_level dl ON a.difficulty_id = dl.difficulty_id
+LEFT JOIN category cat ON a.category_id = cat.category_id;
+```
+
+#### SELECT * Output (10 rows)
+
+```
+ booking_id | booking_date | booking_status |  customer_name   |       attraction_name        | category_name | difficulty_level | tickets_for_this_attraction |  subtotal
+------------+--------------+----------------+------------------+------------------------------+---------------+------------------+-----------------------------+-----------
+          7 | 2021-04-21   | completed      | Rafaelita Creasy | Ramos, Hernandez and Hughes  | All           | Hard             |                           8 |   3520.80
+        334 | 2026-03-16   | completed      | Audra Barsham    | Vaughn-Morris                | All           | Medium           |                           7 |   1625.40
+        374 | 2025-02-02   | completed      | Marcile Itzcak   | Novak, Wolfe and Hernandez   | Family        | All              |                           4 |    812.12
+        687 | 2024-11-27   | active         | Kassie Breagan   | Chandler, Ramirez and Turner | Adventure     | Medium           |                           8 |   2995.04
+        381 | 2020-03-29   | completed      | Mata Kitson      | Douglas-Morgan               | Children      | Medium           |                           3 |    197.31
+        382 | 2024-12-31   | pending        | Armin Orneblow   | Moore LLC                    | Children      | Hard             |                           6 |   2496.66
+        116 | 2021-10-07   | completed      | Gayla Dendon     | Ward Inc                     | Adventure     | Medium           |                           6 |   1017.42
+        272 | 2024-02-01   | completed      | Shell Videneev   | Doyle LLC                    | All           | Medium           |                           4 |   1498.44
+        861 | 2020-01-07   | pending        | Malina Whitcher  | Peterson, Adams and Moss     | Adults        | Hard             |                           8 |   1591.36
+        293 | 2026-04-13   | pending        | Kassie Breagan   | Green Group                  | Family        | Medium           |                           6 |   2780.34
+```
+
+---
+
+#### View 2 – Query 1: Most Booked Attractions
+
+**Description:** Shows the ten attractions with the most group booking tickets, along with estimated revenue. Useful for understanding which attractions generate the most booking traffic.
+
+```sql
+SELECT attraction_name, attraction_location, category_name, difficulty_level,
+       COUNT(DISTINCT booking_id) AS total_bookings,
+       SUM(tickets_for_this_attraction) AS total_tickets_booked,
+       ROUND(AVG(avg_rating), 2) AS avg_rating,
+       ROUND(SUM(subtotal), 2) AS estimated_revenue
+FROM view_booking_summary
+GROUP BY attraction_name, attraction_location, category_name, difficulty_level
+ORDER BY total_tickets_booked DESC
+LIMIT 10;
+```
+
+**Output:**
+
+```
+         attraction_name         | attraction_location | category_name | difficulty_level | total_bookings | total_tickets_booked | avg_rating | estimated_revenue
+---------------------------------+---------------------+---------------+------------------+----------------+----------------------+------------+------------------
+ Cole Group                      | West Dianaton       | All           | Hard             |              2 |                   11 |       3.90 |          3746.71
+ Chandler, Ramirez and Turner    | Port Nicoleport     | Adventure     | Medium           |              1 |                    8 |       4.58 |          2995.04
+ Bailey, Jones and Williams      | Martineztown        | Children      | Easy             |              1 |                    8 |       1.05 |           943.60
+ Carpenter, Crawford and Coleman | East Becky          | Children      | Hard             |              1 |                    8 |       1.12 |          2243.52
+ Bell, Torres and Alvarez        | Ronaldmouth         | All           | Medium           |              1 |                    8 |       4.79 |          1443.20
+ Andrews Ltd                     | Stewarttown         | Family        | Medium           |              1 |                    8 |       1.15 |          3866.40
+ Berg, Valdez and Horton         | North Beckyborough  | Adventure     | Easy             |              1 |                    8 |       3.20 |          1031.76
+ Alvarez Group                   | East Stephen        | Adventure     | Hard             |              1 |                    8 |       3.13 |          3262.48
+ Butler-Parrish                  | Kellyfurt           | All           | Hard             |              1 |                    8 |       3.16 |          2783.28
+ Castillo Inc                    | Veronicaberg        | Adventure     | Hard             |              1 |                    8 |       2.88 |           673.04
+```
+
+---
+
+#### View 2 – Query 2: Customers with Active or Completed Bookings (2025+)
+
+**Description:** Shows customers who made active or completed bookings from 2025 onwards, ordered by number of bookings. Useful for identifying high-value customers in the booking system.
+
+```sql
+SELECT customer_id, customer_name, contact_email,
+       COUNT(DISTINCT booking_id) AS bookings_count,
+       SUM(tickets_for_this_attraction) AS total_tickets
+FROM view_booking_summary
+WHERE booking_status IN ('active', 'completed')
+  AND EXTRACT(YEAR FROM booking_date) >= 2025
+GROUP BY customer_id, customer_name, contact_email
+ORDER BY bookings_count DESC, total_tickets DESC
+LIMIT 10;
+```
+
+**Output:**
+
+```
+ customer_id |   customer_name    |           contact_email            | bookings_count | total_tickets
+-------------+--------------------+------------------------------------+----------------+--------------
+       20380 | Laughton Petrolli  | jjennaway3t@google.com             |              1 |            16
+       20272 | Guthrie Fernihough | amc93@jalbum.net                   |              1 |            15
+       20320 | Molli Pitsall      | hcomberql@engadget.com             |              1 |            14
+       20037 | Tad Lanegran       | kbohillshy@tripod.com              |              1 |            14
+       20194 | Annabela Pagen     | bjezzard2k@elpais.com              |              1 |            13
+       20313 | Belia Brackenridge | cyitshak1j@google.com.hk           |              1 |            13
+       20014 | Elli Germain       | rhallborde6@earthlink.net          |              1 |            13
+       20345 | Alfreda Cutriss    | hgrzelewskihf@networksolutions.com |              1 |             9
+       20303 | Wallis Inkpin      | aivanetscp@joomla.org              |              1 |             9
+       20321 | Yule Grzeskowski   | vpoyle16@google.co.uk              |              1 |             9
+```
+
+---
+
+### View 3: view_attraction_overview
+
+#### Description
+
+This is a combined view that unifies data from both systems for every attraction.  
+It shows individual ticket sales (from our system), group booking counts (from outerDB), and review statistics from both review types (ticket-based and direct).  
+It demonstrates the integrated value of the merged database.
+
+#### SQL Code
+
+```sql
+CREATE OR REPLACE VIEW view_attraction_overview AS
+SELECT
+    a.attraction_id, a.attraction_name, a.city, a.category,
+    cat.name AS category_name, dl.name AS difficulty_level,
+    a.avg_rating AS stored_avg_rating,
+    COUNT(DISTINCT t.ticket_id) AS individual_tickets_sold,
+    COUNT(DISTINCT bd.booking_id) AS group_bookings_count,
+    COUNT(DISTINCT CASE WHEN r.ticket_id IS NOT NULL THEN r.review_id END) AS ticket_reviews_count,
+    COUNT(DISTINCT CASE WHEN r.direct_attraction_id IS NOT NULL THEN r.review_id END) AS direct_reviews_count,
+    COUNT(DISTINCT r.review_id) AS total_reviews,
+    ROUND(AVG(r.rating), 2) AS calculated_avg_rating
+FROM attraction a
+LEFT JOIN category cat ON a.category_id = cat.category_id
+LEFT JOIN difficulty_level dl ON a.difficulty_id = dl.difficulty_id
+LEFT JOIN ticket t ON a.attraction_id = t.attraction_id
+LEFT JOIN booking_details bd ON a.attraction_id = bd.attraction_id
+LEFT JOIN review r ON (r.ticket_id = t.ticket_id OR r.direct_attraction_id = a.attraction_id)
+GROUP BY a.attraction_id, a.attraction_name, a.city, a.category,
+         cat.name, dl.name, a.avg_rating;
+```
+
+#### SELECT * Output (10 rows)
+
+```
+ attraction_name |    city    |    category    | difficulty_level | individual_tickets_sold | group_bookings_count | total_reviews | calculated_avg_rating
+-----------------+------------+----------------+------------------+-------------------------+----------------------+---------------+----------------------
+ Attraction 1    | Ashdod     | Kids           |                  |                      31 |                    0 |            28 |                  2.79
+ Attraction 2    | Ashdod     | Science        |                  |                      35 |                    0 |            26 |                  3.38
+ Attraction 3    | Ramat Gan  | Science        |                  |                      43 |                    0 |            50 |                  3.10
+ Attraction 4    | Nazareth   | History        |                  |                      44 |                    0 |            51 |                  2.88
+ Attraction 5    | Eilat      | Amusement Park |                  |                      49 |                    0 |            59 |                  3.15
+ Attraction 6    | Beer Sheva | Museum         |                  |                      34 |                    0 |            37 |                  2.81
+ Attraction 7    | Ashdod     | Science        |                  |                      43 |                    0 |            47 |                  3.51
+ Attraction 8    | Nazareth   | Zoo            |                  |                      41 |                    0 |            55 |                  3.05
+ Attraction 9    | Eilat      | Amusement Park |                  |                      41 |                    0 |            42 |                  2.88
+ Attraction 10   | Netanya    | Water Park     |                  |                      32 |                    0 |            26 |                  2.96
+```
+
+---
+
+#### View 3 – Query 1: Top Attractions with Most Reviews (Both Systems)
+
+**Description:** Shows the ten attractions with the most reviews across both systems, whether from ticket purchases or direct bookings. Demonstrates the combined analytical power of the integrated database.
+
+```sql
+SELECT attraction_name, city,
+       COALESCE(category_name, category) AS category,
+       difficulty_level, individual_tickets_sold, group_bookings_count,
+       total_reviews, ROUND(calculated_avg_rating, 2) AS avg_rating
+FROM view_attraction_overview
+WHERE (individual_tickets_sold > 0 OR group_bookings_count > 0) AND total_reviews > 0
+ORDER BY total_reviews DESC, calculated_avg_rating DESC NULLS LAST
+LIMIT 10;
+```
+
+**Output:**
+
+```
+ attraction_name |    city    |    category    | difficulty_level | individual_tickets_sold | group_bookings_count | total_reviews | avg_rating
+-----------------+------------+----------------+------------------+-------------------------+----------------------+---------------+-----------
+ Attraction 337  | Beer Sheva | Kids           |                  |                      48 |                    0 |            67 |       3.07
+ Attraction 165  | Holon      | Zoo            |                  |                      48 |                    0 |            67 |       3.01
+ Attraction 108  | Netanya    | Family         |                  |                      47 |                    0 |            66 |       3.05
+ Attraction 39   | Tel Aviv   | Water Park     |                  |                      54 |                    0 |            65 |       3.45
+ Attraction 443  | Ashdod     | Kids           |                  |                      47 |                    0 |            65 |       2.97
+ Attraction 292  | Haifa      | Zoo            |                  |                      48 |                    0 |            62 |       3.27
+ Attraction 391  | Nazareth   | Family         |                  |                      55 |                    0 |            60 |       2.98
+ Attraction 242  | Eilat      | Zoo            |                  |                      51 |                    0 |            60 |       2.88
+ Attraction 311  | Jerusalem  | Adventure      |                  |                      49 |                    0 |            59 |       3.24
+ Attraction 5    | Eilat      | Amusement Park |                  |                      49 |                    0 |            59 |       3.15
+```
+
+---
+
+#### View 3 – Query 2: Average Rating per Category (Both Systems Combined)
+
+**Description:** Shows average rating and total activity per attraction category, combining data from both the ticket system and the booking system. Useful for understanding which categories perform best overall.
+
+```sql
+SELECT COALESCE(category_name, category) AS category_label,
+       COUNT(DISTINCT attraction_id) AS attractions_count,
+       SUM(total_reviews) AS total_reviews,
+       ROUND(AVG(calculated_avg_rating), 2) AS avg_rating,
+       SUM(individual_tickets_sold) AS total_individual_tickets,
+       SUM(group_bookings_count) AS total_group_bookings
+FROM view_attraction_overview
+WHERE total_reviews > 0
+GROUP BY COALESCE(category_name, category)
+ORDER BY avg_rating DESC, total_reviews DESC;
+```
+
+**Output:**
+
+```
+ category_label | attractions_count | total_reviews | avg_rating | total_individual_tickets | total_group_bookings
+----------------+-------------------+---------------+------------+--------------------------+---------------------
+ Adventure      |               121 |          1954 |       3.08 |                     1806 |                   1
+ Science        |                57 |          2305 |       3.04 |                     2307 |                   0
+ Kids           |                46 |          1870 |       3.04 |                     1866 |                   0
+ Amusement Park |                44 |          1712 |       3.03 |                     1761 |                   0
+ Museum         |                42 |          1685 |       3.03 |                     1724 |                   0
+ Nature         |                50 |          1942 |       3.02 |                     1992 |                   0
+ Water Park     |                66 |          2654 |       3.01 |                     2615 |                   0
+ History        |                52 |          1998 |       3.00 |                     2000 |                   0
+ Adults         |                96 |           240 |       3.00 |                        0 |                   1
+ Family         |               133 |          2127 |       2.99 |                     1916 |                   1
+ Zoo            |                51 |          2116 |       2.99 |                     2013 |                   0
+ All            |                85 |           200 |       2.99 |                        0 |                   2
+ Children       |                89 |           196 |       2.95 |                        0 |                   2
+```
+
+---
+
+
 # Summary
 
 This project presents a database for an **Attractions and Tourism** system with a focus on a **Review System**.
@@ -1555,6 +1928,8 @@ In Stage A, we designed the database schema, created the ERD and DSD diagrams, i
 
 In Stage B, we wrote complex SQL queries, including paired queries written in different ways, update and delete operations, constraints, transaction demonstrations using `ROLLBACK` and `COMMIT`, and indexes with performance comparison.
 
+In Stage C, we performed integration with the database of another team (outerDB — a booking system). We applied reverse engineering to reconstruct the ERD of the received system, designed a combined ERD, and implemented the integration using `ALTER TABLE` and `CREATE TABLE` commands. We created a new integrated database (`dbintegrated`) containing data from both systems, and wrote three views with two queries each.
+
 The project now includes:
 - system definition
 - AI Studio link
@@ -1562,7 +1937,5 @@ The project now includes:
 - design decisions
 - data insertion methods
 - backup and restore documentation
-- Stage B SQL queries
-- constraints
-- indexes
-- transaction demonstrations
+- Stage B SQL queries, constraints, indexes, and transaction demonstrations
+- Stage C integration (reverse engineering, combined ERD, integration SQL, views and queries)
