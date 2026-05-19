@@ -21,7 +21,8 @@
 7. [Data Insertion Methods](#data-insertion-methods)
 8. [Backup and Restore](#backup-and-restore)
 9. [Stage B – Queries and Constraints](#stage-b--queries-and-constraints)
-10. [Summary](#summary)
+10. [Stage C Submission Files](#stage-c-submission-files)
+11. [Summary](#summary)
 
 
 ---
@@ -1355,6 +1356,193 @@ This backup represents the database state after completing the queries, constrai
 
 
 ---
+
+# Stage C – Database Integration and Views
+
+## Reverse Engineering and Integration Process
+
+In this stage, we integrated our original database with an additional database received from another team.
+
+According to the requirements of Stage C, we first restored the backup file of the new database in our environment.  
+After restoring the database, we examined its tables, primary keys, foreign keys, constraints, and relationships. Based on this structure, we created a DSD for the new department.
+
+After the DSD was created, we performed a reverse engineering process. This means that we reconstructed an ERD from the logical database schema. At this point, we had two ERD diagrams:
+
+1. Our original ERD.
+2. The ERD reconstructed from the new department database.
+
+After both diagrams were ready, we performed integration at the design level.  
+We converted the ERD diagrams into JSON format, combined the JSON representation of our original ERD with the JSON representation of the new department ERD, and created one integrated ERD.
+
+The integrated ERD represents a combined database that includes entities, attributes, and relationships from both systems.
+
+---
+
+## Reverse Engineering Process
+
+The reverse engineering process was performed using the following steps:
+
+1. **Restoring the received backup**  
+   We restored the backup file received from the other team into a new database in pgAdmin.
+    
+2. **Inspecting the database structure**  
+   We examined the tables, columns, primary keys, foreign keys, and constraints in the restored database.
+
+3. **Creating a DSD for the new department**  
+   Based on the restored database schema, we created a DSD that represents the logical structure of the new department database.
+
+### DSD of the New Department
+The following diagram shows the DSD created from the restored database of the new department.
+
+<img width="1765" height="1045" alt="Untitled (1)" src="https://github.com/user-attachments/assets/4041146b-64af-4c10-92ac-1cb0599a32f0" />
+
+5. **Identifying entities**  
+   Tables with an independent primary key were identified as entities in the ERD.
+
+6. **Identifying attributes**  
+   Columns that describe the data of a table were identified as attributes of the corresponding entity.
+
+7. **Identifying relationships**  
+   Foreign keys were used to identify relationships between entities.
+
+8. **Identifying many-to-many relationships**  
+   Tables that mainly contained foreign keys to two other tables were examined as linking tables.  
+   When appropriate, these tables were represented as many-to-many relationships in the ERD.
+
+9. **Determining cardinality**  
+   Cardinality was determined according to the foreign key structure:
+   - A foreign key in one table usually represents a one-to-many relationship.
+   - A linking table between two entities usually represents a many-to-many relationship.
+
+### ERD of the New Department
+
+The following diagram shows the ERD that was manually reconstructed from the DSD.
+
+<img width="5664" height="2346" alt="erdplus (5)" src="https://github.com/user-attachments/assets/9105bda7-67fa-44e3-a627-1dc359f2c5c6" />
+
+10. **Constructing the ERD manually**  
+   After identifying the entities, attributes, relationships, and cardinalities, we manually created the ERD of the new department in ERDPlus.
+
+---
+
+## Integration Decisions
+
+During the integration process, we identified overlapping entities between the two systems and made several design decisions.
+
+### Integrated ERD
+
+The following diagram shows the shared ERD created after integrating the two systems.
+
+<img width="5664" height="2346" alt="erdplus (4)" src="https://github.com/user-attachments/assets/4ab473b2-7f27-4573-8c84-5c11d312a907" />
+
+### Merging User and Customer
+
+The `User` entity from the new system was merged with our original `Customer` entity.
+
+This decision was made because both entities represent an end user of the system.  
+Instead of keeping two separate entities for users, we created one unified customer entity that contains the relevant attributes from both systems.
+
+### Merging Attraction Entities
+
+Both systems contained an `Attraction` entity.
+
+Since both entities represented the same real-world concept, they were merged into one unified `Attraction` entity.  
+The unified entity includes the original attraction details from our system, together with additional attributes from the new system.
+
+The following attributes were added to `Attraction`:
+
+- `location`
+- `duration`
+- `target_audience`
+- `main_image_url`
+- `short_description`
+- `full_description`
+
+### Improving Attraction Description Fields
+
+The original description structure was adjusted.
+
+Instead of keeping several overlapping description fields, we decided to keep two clear description fields:
+
+- `short_description` — used for short previews and compact displays.
+- `full_description` — used for a complete description of the attraction.
+
+This improves clarity and avoids unnecessary duplication.
+
+### Replacing Category Field with Category Entity
+
+In the original structure, `category` appeared as a field inside the `Attraction` entity.
+
+During the integration, we replaced this field with a separate `Category` entity.  
+This decision improves normalization, prevents duplicated category values, and allows multiple attractions to reference the same category consistently.
+
+### Merging Review Entities
+
+Both systems contained a `Review` entity.
+
+Since both entities represent a user review about an attraction, they were merged into one unified `Review` entity.  
+This allows the integrated database to manage all reviews in one place.
+
+### Keeping Booking and Ticket as Separate Concepts
+
+The `Booking` entity from the new system and the `Ticket` entity from our original system were not fully merged.
+
+We decided to keep both concepts because they represent different business meanings:
+
+- `Booking` represents a general reservation made by a customer.
+- `Ticket` represents a specific ticket or item that belongs to an order or visit.
+
+This separation allows the system to support a more flexible reservation structure while still preserving the original ticket logic.
+
+### Keeping ReviewReaction and ReviewReport
+
+The entities `ReviewReaction` and `ReviewReport` were preserved from our original system.
+
+These entities add important functionality:
+
+- `ReviewReaction` allows users to react to reviews.
+- `ReviewReport` allows users to report problematic reviews.
+
+Since these features extend the review system, we kept them in the integrated design.
+
+### Keeping Gallery Image as a Separate Entity
+
+The `Gallery_Image` entity was kept as a separate entity.
+
+This decision allows each attraction to have multiple images instead of only one image field inside the `Attraction` entity.  
+This structure is more flexible and supports a richer attraction display.
+
+### Keeping Difficulty Level as a Separate Entity
+
+The `Difficulty_Level` entity was kept as a separate entity.
+
+This allows the system to classify attractions according to difficulty level and enables filtering attractions by difficulty.
+
+---
+
+## Integrated Schema Implementation
+
+After creating the integrated ERD, we generated an integrated DSD.
+
+According to the project requirements, we did not recreate the entire database from scratch.  
+Instead, we used the existing tables and modified the database structure using SQL commands in the `Integrate.sql` file.
+
+The implementation included the following types of commands:
+
+- `ALTER TABLE` commands for adding new columns to existing tables.
+- `CREATE TABLE` commands for creating new tables that did not exist in the original system.
+- `ADD CONSTRAINT` commands for adding foreign keys and preserving relationships between tables.
+- Adjustments to existing relationships so that the physical schema matches the integrated ERD.
+- Data checks to verify that the integrated database contains data in all relevant tables.
+
+The new tables created as part of the integration include:
+
+- `Category`
+- `Difficulty_Level`
+- `Gallery_Image`
+- `Booking`
+
+At the end of the process, we had an integrated database that combines the data and structure of both systems while maintaining a clear and normalized schema.
 
 
 # Summary
