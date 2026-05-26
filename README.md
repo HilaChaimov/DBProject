@@ -1,4 +1,4 @@
-איא# DBProject
+## DBProject
 
 ## Database Mini Project  
 
