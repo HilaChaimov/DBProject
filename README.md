@@ -1357,7 +1357,7 @@ This backup represents the database state after completing the queries, constrai
 
 ---
 
-# Stage C – Database Integration and Views
+# Stage C - Integration and Views
 
 ## Reverse Engineering and Integration Process
 
