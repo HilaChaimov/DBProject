@@ -153,6 +153,7 @@ BEGIN
         EXIT WHEN NOT FOUND;
 
         -- Calculate average rating and number of active reviews
+        -- Reviews are connected to attractions only through: review -> ticket -> attraction
         SELECT
             COALESCE(ROUND(AVG(r.rating), 2), 0),
             COUNT(r.review_id)
@@ -160,22 +161,18 @@ BEGIN
             v_avg_rating,
             v_reviews_count
         FROM review r
-        LEFT JOIN ticket t ON r.ticket_id = t.ticket_id
+        JOIN ticket t ON r.ticket_id = t.ticket_id
         WHERE COALESCE(r.is_deleted, FALSE) = FALSE
-          AND (
-                t.attraction_id = v_attraction_rec.attraction_id
-                OR r.direct_attraction_id = v_attraction_rec.attraction_id
-              );
+          AND t.attraction_id = v_attraction_rec.attraction_id;
 
         -- Count reports on reviews of this attraction
+        -- Reviews are connected to attractions only through: review -> ticket -> attraction
         SELECT COUNT(DISTINCT rep.report_id)
         INTO v_reports_count
         FROM reviewreport rep
         JOIN review r ON rep.review_id = r.review_id
-        LEFT JOIN ticket t ON r.ticket_id = t.ticket_id
-        WHERE
-            t.attraction_id = v_attraction_rec.attraction_id
-            OR r.direct_attraction_id = v_attraction_rec.attraction_id;
+        JOIN ticket t ON r.ticket_id = t.ticket_id
+        WHERE t.attraction_id = v_attraction_rec.attraction_id;
 
         -- Count cancelled tickets
         SELECT COUNT(*)

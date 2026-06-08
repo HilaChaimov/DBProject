@@ -22,7 +22,8 @@
 8. [Backup and Restore](#backup-and-restore)
 9. [Stage B – Queries and Constraints](#stage-b--queries-and-constraints)
 10. [Stage C – Integration and Views](#stage-c--integration-and-views)
-11. [Summary](#summary)
+11. [Stage D – PL/pgSQL Programming](#stage-d--plpgsql-programming)
+12. [Summary](#summary)
 
 
 ---
@@ -1520,6 +1521,16 @@ This allows the system to classify attractions according to difficulty level and
 
 ---
 
+## Integrated DSD
+
+The following diagram shows the integrated DSD generated after merging the two systems.  
+It reflects the final physical schema of the combined database, including all new tables, added columns, and foreign key relationships introduced during the integration.
+
+<!-- Upload the integrated DSD image to GitHub and replace the src URL below -->
+<img width="5664" height="2346" alt="Integrated DSD" src="https://github.com/user-attachments/assets/REPLACE_WITH_ACTUAL_URL" />
+
+---
+
 ## Integrated Schema Implementation
 
 After creating the integrated ERD, we generated an integrated DSD.
@@ -1918,6 +1929,409 @@ ORDER BY avg_rating DESC, total_reviews DESC;
 ---
 
 
+# Stage D – PL/pgSQL Programming
+
+## Introduction
+
+In this stage, we extended the integrated database with procedural logic written in PL/pgSQL.
+
+The goal of this stage is to add business logic directly inside the database using functions, procedures, and triggers. This allows the database to enforce rules automatically, keep computed columns consistent, and provide reusable logic that can be called from application code or from main programs.
+
+The stage includes:
+- 2 functions that return computed values based on attraction and customer data
+- 2 procedures that recalculate and update stored values across the attraction table
+- 2 triggers that automatically maintain the `popularity_score` and `avg_rating` of each attraction
+- 2 main programs (DO blocks) that call the functions and procedures and demonstrate the full flow
+
+
+---
+
+
+## Files
+
+| File | Purpose |
+|------|---------|
+| `StageD/AlterTable.sql` | Adds new columns to the `attraction` table to support the business logic |
+| `StageD/Functions.sql` | Defines two PL/pgSQL functions |
+| `StageD/Procedures.sql` | Defines two PL/pgSQL procedures |
+| `StageD/Triggers.sql` | Defines two triggers and their trigger functions |
+| `StageD/MainPrograms.sql` | Two DO blocks that call the functions and procedures |
+
+
+---
+
+
+## AlterTable.sql
+
+Before the functions, procedures, and triggers can be used, three new columns must be added to the `attraction` table.
+
+The `AlterTable.sql` file adds the following columns:
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| `popularity_score` | `INTEGER DEFAULT 0` | Stores the computed popularity score, updated automatically by trigger and procedure |
+| `avg_rating` | `NUMERIC(3,2)` | Stores the computed average review rating, updated automatically by trigger |
+| `attraction_status` | `VARCHAR(30) DEFAULT 'ACTIVE'` | Stores the management status, updated by procedure |
+
+The file also adds a `CHECK` constraint that limits `attraction_status` to the values `ACTIVE`, `POPULAR`, `NEEDS_REVIEW`, and `LOW_RATED`.
+
+After adding the columns, the file populates initial values for all existing rows using `UPDATE` statements, so that the new columns are not empty when the functions and procedures first run.
+
+### Screenshot 1 – AlterTable columns
+
+*Screenshot should be added here after running AlterTable.sql and verifying the new columns in pgAdmin.*
+
+![AlterTable columns](StageD/images/stageD_01_altertable_columns.png)
+
+
+---
+
+
+## Function 1 – fn_calculate_attraction_quality
+
+### Description
+
+This function receives an `attraction_id` and returns a numeric quality score for that attraction.
+
+The score is composed of:
+- The stored average rating scaled to 0–100 (main component)
+- Ticket count bonus: up to 20 points
+- Review count bonus: up to 15 points
+- Cancelled ticket penalty: −2 per cancelled ticket
+- Report penalty: −3 per report on the attraction's reviews
+
+The score cannot go below zero. If the attraction does not exist, the function raises an exception with the message `Attraction with id X does not exist`.
+
+**PL/pgSQL elements used:** `DECLARE`, variables, `IF / ELSIF`, `RAISE EXCEPTION`, `RAISE NOTICE`, `EXCEPTION WHEN OTHERS`.
+
+### SQL Code
+
+See [`StageD/Functions.sql`](StageD/Functions.sql) — `fn_calculate_attraction_quality`.
+
+Example call:
+```sql
+SELECT fn_calculate_attraction_quality(1);
+```
+
+### Screenshot 2 – Function quality score
+
+*Screenshot should be added here after calling the function in pgAdmin and verifying the returned score.*
+
+![fn_calculate_attraction_quality result](StageD/images/stageD_02_function_quality.png)
+
+
+---
+
+
+## Function 2 – fn_get_customer_activity_level
+
+### Description
+
+This function receives a `customer_id` and returns a string classification describing the customer's activity level in the system.
+
+The classification is based on the number of tickets purchased, tickets used, tickets cancelled, reviews written, and reactions given.
+
+Possible return values:
+
+| Value | Meaning |
+|-------|---------|
+| `INACTIVE_CUSTOMER` | No tickets, reviews, or reactions |
+| `RISKY_CUSTOMER` | Many cancellations exceeding used and active tickets combined |
+| `VIP_CUSTOMER` | High ticket count, many used tickets, several reviews, many reactions |
+| `ACTIVE_CUSTOMER` | Moderate engagement |
+| `REGULAR_CUSTOMER` | Low but non-zero activity |
+
+If the customer does not exist, the function raises an exception.
+
+**PL/pgSQL elements used:** implicit cursor (`FOR ... IN SELECT ... LOOP`), `RECORD`, variables, `IF / ELSIF / ELSE`, `RAISE EXCEPTION`, `RAISE NOTICE`, `EXCEPTION WHEN OTHERS`.
+
+### SQL Code
+
+See [`StageD/Functions.sql`](StageD/Functions.sql) — `fn_get_customer_activity_level`.
+
+Example call:
+```sql
+SELECT fn_get_customer_activity_level(1);
+```
+
+### Screenshot 3 – Function customer activity
+
+*Screenshot should be added here after calling the function in pgAdmin and verifying the returned classification.*
+
+![fn_get_customer_activity_level result](StageD/images/stageD_03_function_customer_activity.png)
+
+
+---
+
+
+## Trigger 1 – trg_update_popularity_after_ticket_insert
+
+### Description
+
+This trigger fires automatically after every `INSERT` on the `ticket` table.
+
+When a new ticket is inserted:
+- If `ticket_status` is `active`, the `popularity_score` of the related attraction is incremented by 1.
+- If `ticket_status` is `used`, the `popularity_score` is incremented by 2.
+- Cancelled tickets do not change the score.
+
+This trigger ensures that `popularity_score` stays up to date automatically without requiring manual updates after each ticket purchase.
+
+**Trigger type:** `AFTER INSERT ON ticket`, `FOR EACH ROW`.
+
+### SQL Code
+
+See [`StageD/Triggers.sql`](StageD/Triggers.sql) — `trg_update_popularity_after_ticket_insert`.
+
+### Screenshot 4 – Trigger popularity update
+
+*Screenshot should be added here after inserting a ticket in pgAdmin and verifying that the related attraction's popularity_score was updated in the attraction table.*
+
+![trg_update_popularity_after_ticket_insert result](StageD/images/stageD_04_trigger_popularity.png)
+
+
+---
+
+
+## Trigger 2 – trg_refresh_avg_rating_after_review_change
+
+### Description
+
+This trigger fires automatically after every `INSERT` or `UPDATE` of the `rating` or `is_deleted` columns on the `review` table.
+
+When a review is inserted or its rating or deletion status changes, the trigger:
+1. Finds the attraction linked to the review through its ticket (`review → ticket → attraction`).
+2. Recalculates the average rating for that attraction from all active (non-deleted) reviews.
+3. Updates the `avg_rating` column of the attraction.
+4. Emits a `RAISE NOTICE` message with the updated attraction ID.
+
+This trigger ensures that `avg_rating` in the attraction table is always consistent with the actual review data.
+
+**Trigger type:** `AFTER INSERT OR UPDATE OF rating, is_deleted ON review`, `FOR EACH ROW`.
+
+**Note:** The pgAdmin **Messages** tab will show a `NOTICE` line for each review change. The screenshot should preferably show this output.
+
+### SQL Code
+
+See [`StageD/Triggers.sql`](StageD/Triggers.sql) — `trg_refresh_avg_rating_after_review_change`.
+
+### Screenshot 5 – Trigger avg_rating update
+
+*Screenshot should be added here after inserting or updating a review in pgAdmin and verifying that the attraction's avg_rating was updated. The pgAdmin Messages tab should show the NOTICE output confirming the trigger ran.*
+
+![trg_refresh_avg_rating_after_review_change result](StageD/images/stageD_05_trigger_avg_rating.png)
+
+
+---
+
+
+## Procedure 1 – pr_refresh_attraction_popularity
+
+### Description
+
+This procedure recalculates and updates the `popularity_score` for every attraction in the database in a single run.
+
+For each attraction, the score is computed as:
+
+```
+popularity_score =
+    GREATEST(
+        active_tickets * 1
+      + used_tickets   * 2
+      + group_booking_tickets * 1
+      - cancelled_tickets * 1,
+      0
+    )
+```
+
+The score cannot go below zero. Group booking tickets are counted from `booking_details` if that table exists; otherwise they are treated as zero.
+
+The procedure emits a `RAISE NOTICE` for each attraction it updates.
+
+**PL/pgSQL elements used:** explicit cursor (`CURSOR FOR`), `OPEN`, `FETCH`, `CLOSE`, `LOOP`, `EXIT WHEN NOT FOUND`, `DML UPDATE`, `RAISE NOTICE`, `EXCEPTION WHEN OTHERS`.
+
+### SQL Code
+
+See [`StageD/Procedures.sql`](StageD/Procedures.sql) — `pr_refresh_attraction_popularity`.
+
+Example call:
+```sql
+CALL pr_refresh_attraction_popularity();
+```
+
+### Screenshot 6 – Procedure popularity update
+
+*Screenshot should be added here after calling the procedure in pgAdmin and verifying the updated popularity_score values in the attraction table.*
+
+![pr_refresh_attraction_popularity result](StageD/images/stageD_06_procedure_popularity.png)
+
+
+---
+
+
+## Procedure 2 – pr_mark_problematic_attractions
+
+### Description
+
+This procedure evaluates every attraction and updates its `attraction_status` column based on business rules.
+
+The status is assigned according to the following priority:
+
+| Condition | Status assigned |
+|-----------|----------------|
+| ≥ 10 reports on reviews, or ≥ 20 cancelled tickets | `NEEDS_REVIEW` |
+| ≥ 5 reviews and average rating < 3 | `LOW_RATED` |
+| `popularity_score` ≥ 50 and average rating ≥ 3.5 | `POPULAR` |
+| None of the above | `ACTIVE` |
+
+Reviews are connected to attractions only through the path `review → ticket → attraction`. The procedure uses a `JOIN` through `ticket_id` to find reviews and reports for each attraction.
+
+The procedure emits a `RAISE NOTICE` for each attraction it updates.
+
+**PL/pgSQL elements used:** explicit cursor, `OPEN`, `FETCH`, `CLOSE`, `LOOP`, `EXIT WHEN NOT FOUND`, `DML UPDATE`, `RAISE NOTICE`, `EXCEPTION WHEN OTHERS`.
+
+### SQL Code
+
+See [`StageD/Procedures.sql`](StageD/Procedures.sql) — `pr_mark_problematic_attractions`.
+
+Example call:
+```sql
+CALL pr_mark_problematic_attractions();
+```
+
+### Screenshot 7 – Procedure status update
+
+*Screenshot should be added here after calling the procedure in pgAdmin and verifying the updated attraction_status values in the attraction table.*
+
+![pr_mark_problematic_attractions result](StageD/images/stageD_07_procedure_status.png)
+
+
+---
+
+
+## Main Program 1
+
+### Description
+
+The first main program is a `DO` block that demonstrates a complete flow using Function 1 and Procedure 1.
+
+Steps performed:
+1. Calls `fn_calculate_attraction_quality` for attraction ID 1 and prints the quality score using `RAISE NOTICE`.
+2. Calls `pr_refresh_attraction_popularity` to recalculate `popularity_score` for all attractions.
+3. Handles unexpected errors using `EXCEPTION WHEN OTHERS`.
+
+All output is visible in the pgAdmin **Messages** tab after execution.
+
+### SQL Code
+
+See [`StageD/MainPrograms.sql`](StageD/MainPrograms.sql) — Main Program 1.
+
+```sql
+DO $$
+DECLARE
+    v_attraction_id  INT     := 1;
+    v_quality_score  NUMERIC;
+BEGIN
+    RAISE NOTICE '=== Main Program 1: Attraction Quality and Popularity Refresh ===';
+
+    v_quality_score := fn_calculate_attraction_quality(v_attraction_id);
+    RAISE NOTICE 'Quality score for attraction %: %', v_attraction_id, v_quality_score;
+
+    RAISE NOTICE 'Calling pr_refresh_attraction_popularity for all attractions...';
+    CALL pr_refresh_attraction_popularity();
+
+    RAISE NOTICE '=== Main Program 1 completed successfully ===';
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE NOTICE 'Error in Main Program 1: %', SQLERRM;
+END;
+$$;
+```
+
+### Screenshot 8 – Main Program 1 execution
+
+*Screenshot should be added here after running Main Program 1 in pgAdmin. The Messages tab should show NOTICE output confirming that both fn_calculate_attraction_quality and pr_refresh_attraction_popularity were called.*
+
+![Main Program 1 execution](StageD/images/stageD_08_main_program_1.png)
+
+
+---
+
+
+## Main Program 2
+
+### Description
+
+The second main program is a `DO` block that demonstrates a complete flow using Function 2 and Procedure 2.
+
+Steps performed:
+1. Calls `fn_get_customer_activity_level` for customer ID 1 and prints the classification using `RAISE NOTICE`.
+2. Calls `pr_mark_problematic_attractions` to update `attraction_status` for all attractions.
+3. Handles unexpected errors using `EXCEPTION WHEN OTHERS`.
+
+All output is visible in the pgAdmin **Messages** tab after execution.
+
+### SQL Code
+
+See [`StageD/MainPrograms.sql`](StageD/MainPrograms.sql) — Main Program 2.
+
+```sql
+DO $$
+DECLARE
+    v_customer_id    INT         := 1;
+    v_activity_level VARCHAR(30);
+BEGIN
+    RAISE NOTICE '=== Main Program 2: Customer Activity and Attraction Status Update ===';
+
+    v_activity_level := fn_get_customer_activity_level(v_customer_id);
+    RAISE NOTICE 'Activity level for customer %: %', v_customer_id, v_activity_level;
+
+    RAISE NOTICE 'Calling pr_mark_problematic_attractions for all attractions...';
+    CALL pr_mark_problematic_attractions();
+
+    RAISE NOTICE '=== Main Program 2 completed successfully ===';
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE NOTICE 'Error in Main Program 2: %', SQLERRM;
+END;
+$$;
+```
+
+### Screenshot 9 – Main Program 2 execution
+
+*Screenshot should be added here after running Main Program 2 in pgAdmin. The Messages tab should show NOTICE output confirming that both fn_get_customer_activity_level and pr_mark_problematic_attractions were called.*
+
+![Main Program 2 execution](StageD/images/stageD_09_main_program_2.png)
+
+
+---
+
+
+## Exception Handling Demonstration
+
+### Description
+
+Both functions include exception handling using `EXCEPTION WHEN OTHERS`. To demonstrate this, call `fn_calculate_attraction_quality` with an attraction ID that does not exist in the database.
+
+The function will detect the missing attraction in its `IF NOT EXISTS` check, raise an exception with the message `Attraction with id X does not exist`, and then catch it in the `EXCEPTION WHEN OTHERS` handler, emitting a `RAISE NOTICE` and returning 0.
+
+Example call:
+```sql
+SELECT fn_calculate_attraction_quality(-999);
+```
+
+The pgAdmin **Messages** tab will show the notice, and the query result will be `0`.
+
+### Screenshot 10 – Exception handling
+
+*Screenshot should be added here after calling the function with an invalid attraction_id in pgAdmin. The Messages tab should show the NOTICE output produced by the exception handler.*
+
+![Exception handling demonstration](StageD/images/stageD_10_exception_test.png)
+
+
+---
+
+
 # Summary
 
 This project presents a database for an **Attractions and Tourism** system with a focus on a **Review System**.
@@ -1930,6 +2344,8 @@ In Stage B, we wrote complex SQL queries, including paired queries written in di
 
 In Stage C, we performed integration with the database of another team (outerDB — a booking system). We applied reverse engineering to reconstruct the ERD of the received system, designed a combined ERD, and implemented the integration using `ALTER TABLE` and `CREATE TABLE` commands. We created a new integrated database (`dbintegrated`) containing data from both systems, and wrote three views with two queries each.
 
+In Stage D, we extended the integrated database with PL/pgSQL programming. We added new columns to the `attraction` table (`popularity_score`, `avg_rating`, `attraction_status`), implemented two functions, two procedures, and two triggers, and wrote two main programs that call the functions and procedures and demonstrate the complete flow.
+
 The project now includes:
 - system definition
 - AI Studio link
@@ -1939,3 +2355,4 @@ The project now includes:
 - backup and restore documentation
 - Stage B SQL queries, constraints, indexes, and transaction demonstrations
 - Stage C integration (reverse engineering, combined ERD, integration SQL, views and queries)
+- Stage D PL/pgSQL functions, procedures, triggers, and main programs
