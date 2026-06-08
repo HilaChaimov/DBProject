@@ -1956,6 +1956,7 @@ The stage includes:
 | `StageD/Procedures.sql` | Defines two PL/pgSQL procedures |
 | `StageD/Triggers.sql` | Defines two triggers and their trigger functions |
 | `StageD/MainPrograms.sql` | Two DO blocks that call the functions and procedures |
+| `StageD/images/` | Contains the screenshots used as proof that the Stage D programs ran successfully |
 
 
 ---
@@ -2216,7 +2217,7 @@ CALL pr_mark_problematic_attractions();
 The first main program is a `DO` block that demonstrates a complete flow using Function 1 and Procedure 1.
 
 Steps performed:
-1. Calls `fn_calculate_attraction_quality` for attraction ID 1 and prints the quality score using `RAISE NOTICE`.
+1. Calls `fn_calculate_attraction_quality` for attraction ID 337 and prints the quality score using `RAISE NOTICE`.
 2. Calls `pr_refresh_attraction_popularity` to recalculate `popularity_score` for all attractions.
 3. Handles unexpected errors using `EXCEPTION WHEN OTHERS`.
 
@@ -2229,7 +2230,7 @@ See [`StageD/MainPrograms.sql`](StageD/MainPrograms.sql) — Main Program 1.
 ```sql
 DO $$
 DECLARE
-    v_attraction_id  INT     := 1;
+    v_attraction_id  INT     := 337;
     v_quality_score  NUMERIC;
 BEGIN
     RAISE NOTICE '=== Main Program 1: Attraction Quality and Popularity Refresh ===';
