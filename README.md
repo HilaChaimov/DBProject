@@ -20,10 +20,10 @@
 6. [Design Decisions](#design-decisions)
 7. [Data Insertion Methods](#data-insertion-methods)
 8. [Backup and Restore](#backup-and-restore)
-9. [Stage B – Queries and Constraints](#stage-b--queries-and-constraints)
-10. [Stage C – Integration and Views](#stage-c--integration-and-views)
-11. [Stage D – PL/pgSQL Programming](#stage-d--plpgsql-programming)
-12. [Stage E - Graphical Application](#stage-e---graphical-application-submission-option-2)
+9. [Stage B - Queries and Constraints](#stage-b---queries-and-constraints)
+10. [Stage C - Integration and Views](#stage-c---integration-and-views)
+11. [Stage D - PL/pgSQL Programming](#stage-d---plpgsql-programming)
+12. [Stage E - Graphical Application](#stage-e---graphical-application)
 13. [Summary](#summary)
 
 
