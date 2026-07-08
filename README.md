@@ -2361,15 +2361,67 @@ The project now includes:
 
 ---
 
-# Stage E - Graphical Interface
+# Stage E - Graphical Application (Submission Option 2)
 
-In this stage we created a graphical application that connects to the PostgreSQL database and allows the user to work with the system in a friendly way. The application was implemented in **Python** using **Streamlit** for the graphical web interface and **psycopg2** for database access.
+This stage implements the complete Graphical User Interface (GUI) for the Attractions and Tourism Database. 
 
-The application includes a main entrance dashboard with navigation tabs. The CRUD screen allows the user to choose any table from the database and perform select, insert, update and delete operations. The table list and column list are loaded dynamically from the database schema, so the application can access all existing tables. When a table contains foreign keys, the system automatically replaces the raw IDs with user-friendly names by performing JOIN operations. During updates, the user enters the primary key and the system fetches all other fields into the form for easy modification.
+The application provides a seamless, user-friendly dashboard to interact with all database entities, perform CRUD operations, and execute analytical queries and procedures.
 
-In addition, the application includes a screen for running selected queries from Stage B and programs from Stage D. From this screen the user can run analytical reports about attractions and customers, calculate the quality score of an attraction, classify the activity level of a customer, and run procedures that update popularity and status values of attractions.
+## Technologies Used
+- **Python** & **Streamlit** for the dynamic, responsive frontend.
+- **psycopg** for connecting to the PostgreSQL database.
+- **Pandas** for rendering and manipulating tabular data.
+- **Docker** for containerization and effortless deployment.
 
-This interface demonstrates the connection between the graphical application and the database, including regular CRUD work and activation of database-side logic written in PL/pgSQL, while maintaining a very high standard of aesthetics, responsiveness, and user experience.
+## Satisfying the Project Requirements
+
+### 1. CRUD Operations Across Tables
+The application supports **Create, Read, Update, and Delete** operations for all entities (Customers, Attractions, Tickets, Reviews, Moderation).
+- **Read (SELECT)**: Interactive tables with search, sorting, and pagination.
+- **Create (INSERT)**: Clean forms that validate user input before writing to the database.
+- **Update (UPDATE)**: When updating, the user selects the primary key (or name), and the system automatically brings in all the other fields.
+- **Delete (DELETE)**: Dedicated buttons to safely remove records, including soft-delete functionality for sensitive entities like Reviews.
+
+### 2. User-Friendly Data (No Raw IDs)
+The interface was specifically designed so that **users never have to deal with raw database IDs**.
+- By utilizing Foreign Keys (JOINs), the interface replaces IDs with meaningful data.
+- For example, instead of choosing \category_id = 5\, the user selects \Water Parks\ from a dropdown. 
+- The same applies to Tickets, Attractions, and Customer names. 
+
+### 3. Executing Queries & Procedures
+A dedicated **Database Programs** screen allows the execution of complex SQL from previous stages:
+- **Queries from Stage B**: Integrated into the *Analytics & Reports* tab (e.g., Top Attractions, Booking Summaries).
+- **Functions & Procedures from Stage D**: The app can calculate an Attraction's Quality Score, get a Customer's Activity Level, and run procedures to refresh popularities directly via button clicks.
+
+---
+
+## Application Screenshots
+
+### 1. Main Entrance (Dashboard)
+The central hub for navigation.
+![Dashboard](StageE/screenshots/1_main_dashboard.png)
+
+### 2. Viewing Data (Read)
+Dynamic data tables with ID-to-Name resolution.
+![Attractions](StageE/screenshots/2_attractions.png)
+
+### 3. Adding New Records (Insert)
+Clean forms for inserting new attractions.
+![Add Attraction](StageE/screenshots/3_add_attraction.png)
+
+### 4. Updating Records (Update)
+Selecting a record populates the form with existing data for easy modification.
+![Edit Attraction](StageE/screenshots/4_edit_attraction.png)
+
+### 5. Running Analytical Queries
+Executing Stage B queries for data analysis.
+![Analytics](StageE/screenshots/7_analytics.png)
+
+### 6. Executing Procedures & Functions
+Running Stage D programs with user feedback.
+![Database Programs](StageE/screenshots/8_programs.png)
+
+---
 
 ## How to Run the Application (Submission Option 2)
 
@@ -2377,11 +2429,10 @@ This project is packaged with Docker, meaning the database and the Streamlit Web
 
 1. **Prerequisites**: Ensure you have [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running on your computer.
 2. **Clone or Download**: Clone this repository or extract the ZIP file to your computer.
-3. **Run the Project**: Open a terminal (Command Prompt, PowerShell, or macOS Terminal), navigate to the root directory of the project (where `docker-compose.yml` is located), and run the following command:
-   ```bash
+3. **Run the Project**: Open a terminal (Command Prompt, PowerShell, or macOS Terminal), navigate to the root directory of the project (where \docker-compose.yml\ is located), and run the following command:
+   \\ash
    docker-compose up --build -d
-   ```
-4. **Wait for Initialization**: The PostgreSQL database will automatically initialize using the provided `init-db/01-init.sql` dump file containing all the schema, data, views, functions, and procedures. The Streamlit app will wait for the DB to be healthy before starting.
+   \4. **Wait for Initialization**: The PostgreSQL database will automatically initialize using the provided \init-db/01-init.sql\ dump file containing all the schema, data, views, functions, and procedures. The Streamlit app will wait for the DB to be healthy before starting.
 5. **Open the Application**: Open your web browser and go to:
    👉 **[http://localhost:8501](http://localhost:8501)**
 
@@ -2389,9 +2440,4 @@ This project is packaged with Docker, meaning the database and the Streamlit Web
 If you wish to inspect the database directly using pgAdmin:
 1. Open your web browser and go to: **[http://localhost:8080](http://localhost:8080)**
 2. **Login Details**:
-   - Email: `hchaimov@g.jct.ac.il`
-   - Password: `hilaTalya`
-3. The database server is already connected. Expand the Servers tree and look for the `integrateDB` database.
-
-## Screenshots
-All screenshots of the application execution are stored in the `StageE/screenshots` folder.
+   - Email: \hchaimov@g.jct.ac.il   - Password: \hilaTalya3. The database server is already connected. Expand the Servers tree and look for the \integrateDB\ database.
