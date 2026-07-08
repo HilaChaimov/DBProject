@@ -2397,32 +2397,42 @@ A dedicated **Database Programs** screen allows the execution of complex SQL fro
 
 ## Application Screenshots
 
-### 1. Main Entrance (Dashboard)
-The central hub for navigation.
+All screenshots of the application execution are stored in the \StageE/screenshots\ folder. Below is a detailed view of each screen:
+
+### 1. Main Dashboard
+The central hub for navigation, providing a quick overview of system statistics and easy access to all modules.
 ![Dashboard](StageE/screenshots/1_main_dashboard.png)
 
-### 2. Viewing Data (Read)
-Dynamic data tables with ID-to-Name resolution.
+### 2. Attractions
+Dynamic data tables displaying all attractions. Includes functionality to view details with ID-to-Name resolution, and to Add, Edit, or Delete attractions directly from the UI.
 ![Attractions](StageE/screenshots/2_attractions.png)
 
 ### 3. Tickets
-Managing the tickets inventory with CRUD operations.
+Managing the tickets inventory. Allows users to view ticket types, pricing, and associate them with specific attractions effortlessly.
 ![Tickets](StageE/screenshots/3_tickets.png)
 
 ### 4. Moderation
-Dedicated screen for system moderation.
+Dedicated screen for system moderation and administrative tasks to manage reported content and system health.
 ![Moderation](StageE/screenshots/4_moderation.png)
 
-### 5. Running Analytical Queries
-Executing Stage B queries for data analysis.
+### 5. Customers
+Comprehensive view of all registered customers in the system, displaying contact information and user details.
+![Customers](StageE/screenshots/5_customers.png)
+
+### 6. Reviews
+A complete interface to manage and read customer reviews for attractions, including moderation status and star ratings.
+![Reviews](StageE/screenshots/6_reviews.png)
+
+### 7. Analytics & Reports
+Executing Stage B queries for advanced data analysis. Features detailed reporting on top attractions, booking summaries, and revenue metrics.
 ![Analytics](StageE/screenshots/7_analytics.png)
 
-### 6. Executing Procedures & Functions
-Running Stage D programs with user feedback.
+### 8. Database Programs
+Running Stage D programs with user feedback. Allows executing stored procedures and functions (like calculating quality scores or updating popularity) with a single click.
 ![Database Programs](StageE/screenshots/8_programs.png)
 
-### 7. Table Manager (Admin)
-Direct access to raw table data with advanced filtering for administrators.
+### 9. Table Manager (Admin)
+Direct access to raw table data with advanced filtering for database administrators.
 ![Table Manager](StageE/screenshots/9_table_manager.png)
 
 ---
