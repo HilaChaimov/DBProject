@@ -11,11 +11,38 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD_SECRET}
       POSTGRES_DB: ${DB_NAME_SECRET}
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - ./init-db:/docker-entrypoint-initdb.d
       - ./DataImportFiles:/csv
       - postgres_data:/var/lib/postgresql
+    networks:
+      - reportdb_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER_SECRET} -d ${DB_NAME_SECRET}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # -------------------------
+  # Streamlit Web App
+  # -------------------------
+  app:
+    build:
+      context: ./StageE
+    container_name: reportdb_streamlit
+    restart: always
+    ports:
+      - "8501:8501"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: ${DB_USER_SECRET}
+      DB_PASS: ${DB_PASSWORD_SECRET}
+      DB_NAME: ${DB_NAME_SECRET}
+    depends_on:
+      db:
+        condition: service_healthy
     networks:
       - reportdb_network
 
@@ -44,7 +71,6 @@ services:
 volumes:
   postgres_data:
   pgadmin_data:
-
 
 networks:
   reportdb_network:

@@ -2357,3 +2357,41 @@ The project now includes:
 - Stage B SQL queries, constraints, indexes, and transaction demonstrations
 - Stage C integration (reverse engineering, combined ERD, integration SQL, views and queries)
 - Stage D PL/pgSQL functions, procedures, triggers, and main programs
+- Stage E Graphical Interface Application (GUI)
+
+---
+
+# Stage E - Graphical Interface
+
+In this stage we created a graphical application that connects to the PostgreSQL database and allows the user to work with the system in a friendly way. The application was implemented in **Python** using **Streamlit** for the graphical web interface and **psycopg2** for database access.
+
+The application includes a main entrance dashboard with navigation tabs. The CRUD screen allows the user to choose any table from the database and perform select, insert, update and delete operations. The table list and column list are loaded dynamically from the database schema, so the application can access all existing tables. When a table contains foreign keys, the system automatically replaces the raw IDs with user-friendly names by performing JOIN operations. During updates, the user enters the primary key and the system fetches all other fields into the form for easy modification.
+
+In addition, the application includes a screen for running selected queries from Stage B and programs from Stage D. From this screen the user can run analytical reports about attractions and customers, calculate the quality score of an attraction, classify the activity level of a customer, and run procedures that update popularity and status values of attractions.
+
+This interface demonstrates the connection between the graphical application and the database, including regular CRUD work and activation of database-side logic written in PL/pgSQL, while maintaining a very high standard of aesthetics, responsiveness, and user experience.
+
+## How to Run the Application (Submission Option 2)
+
+This project is packaged with Docker, meaning the database and the Streamlit Web App can be run together with a single command. **You do not need to install Python, Streamlit, or PostgreSQL on your host machine.**
+
+1. **Prerequisites**: Ensure you have [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running on your computer.
+2. **Clone or Download**: Clone this repository or extract the ZIP file to your computer.
+3. **Run the Project**: Open a terminal (Command Prompt, PowerShell, or macOS Terminal), navigate to the root directory of the project (where `docker-compose.yml` is located), and run the following command:
+   ```bash
+   docker-compose up --build -d
+   ```
+4. **Wait for Initialization**: The PostgreSQL database will automatically initialize using the provided `init-db/01-init.sql` dump file containing all the schema, data, views, functions, and procedures. The Streamlit app will wait for the DB to be healthy before starting.
+5. **Open the Application**: Open your web browser and go to:
+   👉 **[http://localhost:8501](http://localhost:8501)**
+
+### Optional: pgAdmin Database Access
+If you wish to inspect the database directly using pgAdmin:
+1. Open your web browser and go to: **[http://localhost:8080](http://localhost:8080)**
+2. **Login Details**:
+   - Email: `hchaimov@g.jct.ac.il`
+   - Password: `hilaTalya`
+3. The database server is already connected. Expand the Servers tree and look for the `integrateDB` database.
+
+## Screenshots
+All screenshots of the application execution are stored in the `StageE/screenshots` folder.
