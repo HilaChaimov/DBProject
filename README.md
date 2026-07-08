@@ -23,7 +23,8 @@
 9. [Stage B – Queries and Constraints](#stage-b--queries-and-constraints)
 10. [Stage C – Integration and Views](#stage-c--integration-and-views)
 11. [Stage D – PL/pgSQL Programming](#stage-d--plpgsql-programming)
-12. [Summary](#summary)
+12. [Stage E - Graphical Application](#stage-e---graphical-application-submission-option-2)
+13. [Summary](#summary)
 
 
 ---
@@ -2333,35 +2334,8 @@ The pgAdmin **Messages** tab will show the notice, and the query result will be 
 ---
 
 
-# Summary
-
-This project presents a database for an **Attractions and Tourism** system with a focus on a **Review System**.
-
-The database was designed based on AI-generated screens and includes the main entities required for storing customers, attractions, tickets, reviews, reactions, and reports.
-
-In Stage A, we designed the database schema, created the ERD and DSD diagrams, inserted data using three methods, and performed backup and restore.
-
-In Stage B, we wrote complex SQL queries, including paired queries written in different ways, update and delete operations, constraints, transaction demonstrations using `ROLLBACK` and `COMMIT`, and indexes with performance comparison.
-
-In Stage C, we performed integration with the database of another team (outerDB — a booking system). We applied reverse engineering to reconstruct the ERD of the received system, designed a combined ERD, and implemented the integration using `ALTER TABLE` and `CREATE TABLE` commands. We created a new integrated database (`dbintegrated`) containing data from both systems, and wrote three views with two queries each.
-
-In Stage D, we extended the integrated database with PL/pgSQL programming. We added new columns to the `attraction` table (`popularity_score`, `avg_rating`, `attraction_status`), implemented two functions, two procedures, and two triggers, and wrote two main programs that call the functions and procedures and demonstrate the complete flow.
-
-The project now includes:
-- system definition
-- AI Studio link
-- ERD and DSD diagrams
-- design decisions
-- data insertion methods
-- backup and restore documentation
-- Stage B SQL queries, constraints, indexes, and transaction demonstrations
-- Stage C integration (reverse engineering, combined ERD, integration SQL, views and queries)
-- Stage D PL/pgSQL functions, procedures, triggers, and main programs
-- Stage E Graphical Interface Application (GUI)
-
----
-
-# Stage E - Graphical Application (Submission Option 2)
+# Stage E - Graphical Application
+(Submission Option 2)
 
 This stage implements the complete Graphical User Interface (GUI) for the Attractions and Tourism Database. 
 
@@ -2458,3 +2432,33 @@ If you wish to inspect the database directly using pgAdmin:
    - Email: `hchaimov@g.jct.ac.il`
    - Password: `hilaTalya`
 3. The database server is already connected. Expand the Servers tree and look for the `integrateDB` database.
+
+---
+
+# Summary
+
+This project presents a database for an **Attractions and Tourism** system with a focus on a **Review System**.
+
+The database was designed based on AI-generated screens and includes the main entities required for storing customers, attractions, tickets, reviews, reactions, and reports.
+
+In Stage A, we designed the database schema, created the ERD and DSD diagrams, inserted data using three methods, and performed backup and restore.
+
+In Stage B, we wrote complex SQL queries, including paired queries written in different ways, update and delete operations, constraints, transaction demonstrations using `ROLLBACK` and `COMMIT`, and indexes with performance comparison.
+
+In Stage C, we performed integration with the database of another team (outerDB — a booking system). We applied reverse engineering to reconstruct the ERD of the received system, designed a combined ERD, and implemented the integration using `ALTER TABLE` and `CREATE TABLE` commands. We created a new integrated database (`dbintegrated`) containing data from both systems, and wrote three views with two queries each.
+
+In Stage D, we extended the integrated database with PL/pgSQL programming. We added new columns to the `attraction` table (`popularity_score`, `avg_rating`, `attraction_status`), implemented two functions, two procedures, and two triggers, and wrote two main programs that call the functions and procedures and demonstrate the complete flow.
+
+The project now includes:
+- system definition
+- AI Studio link
+- ERD and DSD diagrams
+- design decisions
+- data insertion methods
+- backup and restore documentation
+- Stage B SQL queries, constraints, indexes, and transaction demonstrations
+- Stage C integration (reverse engineering, combined ERD, integration SQL, views and queries)
+- Stage D PL/pgSQL functions, procedures, triggers, and main programs
+- Stage E Graphical Interface Application (GUI)
+
+---
