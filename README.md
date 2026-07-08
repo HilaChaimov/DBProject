@@ -2421,6 +2421,10 @@ Executing Stage B queries for data analysis.
 Running Stage D programs with user feedback.
 ![Database Programs](StageE/screenshots/8_programs.png)
 
+### 7. Table Manager (Admin)
+Direct access to raw table data with advanced filtering for administrators.
+![Table Manager](StageE/screenshots/9_table_manager.png)
+
 ---
 
 ## How to Run the Application (Submission Option 2)
