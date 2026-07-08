@@ -2405,13 +2405,13 @@ The central hub for navigation.
 Dynamic data tables with ID-to-Name resolution.
 ![Attractions](StageE/screenshots/2_attractions.png)
 
-### 3. Adding New Records (Insert)
-Clean forms for inserting new attractions.
-![Add Attraction](StageE/screenshots/3_add_attraction.png)
+### 3. Tickets
+Managing the tickets inventory with CRUD operations.
+![Tickets](StageE/screenshots/3_tickets.png)
 
-### 4. Updating Records (Update)
-Selecting a record populates the form with existing data for easy modification.
-![Edit Attraction](StageE/screenshots/4_edit_attraction.png)
+### 4. Moderation
+Dedicated screen for system moderation.
+![Moderation](StageE/screenshots/4_moderation.png)
 
 ### 5. Running Analytical Queries
 Executing Stage B queries for data analysis.
@@ -2429,10 +2429,11 @@ This project is packaged with Docker, meaning the database and the Streamlit Web
 
 1. **Prerequisites**: Ensure you have [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running on your computer.
 2. **Clone or Download**: Clone this repository or extract the ZIP file to your computer.
-3. **Run the Project**: Open a terminal (Command Prompt, PowerShell, or macOS Terminal), navigate to the root directory of the project (where \docker-compose.yml\ is located), and run the following command:
-   \\ash
+3. **Run the Project**: Open a terminal (Command Prompt, PowerShell, or macOS Terminal), navigate to the root directory of the project (where `docker-compose.yml` is located), and run the following command:
+   ```bash
    docker-compose up --build -d
-   \4. **Wait for Initialization**: The PostgreSQL database will automatically initialize using the provided \init-db/01-init.sql\ dump file containing all the schema, data, views, functions, and procedures. The Streamlit app will wait for the DB to be healthy before starting.
+   ```
+4. **Wait for Initialization**: The PostgreSQL database will automatically initialize using the provided `init-db/01-init.sql` dump file containing all the schema, data, views, functions, and procedures. The Streamlit app will wait for the DB to be healthy before starting.
 5. **Open the Application**: Open your web browser and go to:
    👉 **[http://localhost:8501](http://localhost:8501)**
 
@@ -2440,4 +2441,6 @@ This project is packaged with Docker, meaning the database and the Streamlit Web
 If you wish to inspect the database directly using pgAdmin:
 1. Open your web browser and go to: **[http://localhost:8080](http://localhost:8080)**
 2. **Login Details**:
-   - Email: \hchaimov@g.jct.ac.il   - Password: \hilaTalya3. The database server is already connected. Expand the Servers tree and look for the \integrateDB\ database.
+   - Email: `hchaimov@g.jct.ac.il`
+   - Password: `hilaTalya`
+3. The database server is already connected. Expand the Servers tree and look for the `integrateDB` database.
